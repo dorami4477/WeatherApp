@@ -10,7 +10,7 @@ import Foundation
 final class WeatherViewModel{
     var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
-    var outputEvery3HoursWeather:Observable<Every3HoursFor5Days?> = Observable(nil)
+    var outputEvery3HoursWeather:Observable<[List]?> = Observable(nil)
     
     init(){
             inputViewDidLoadTrigger.bind { _ in
@@ -26,11 +26,34 @@ final class WeatherViewModel{
                 if let currentWeather = value as? CurrentWithCity{
                     self.outputCurrentWeather.value = currentWeather
                 }else if let every3hours = value as? Every3HoursFor5Days{
-                    self.outputEvery3HoursWeather.value = every3hours
+                    self.outputEvery3HoursWeather.value = every3hours.list
+
                 }
             case .failure(let failure):
                 print(failure)
             }
         }
     }
+    
+    /*
+    func configureData(_ data:List){
+        timeLabel.text = data.dtTxt
+        temperatureLebel.text = "\(data.main.temp)"
+        guard let icon = data.weather.first?.icon else { return }
+        let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
+        iconImageView.kf.setImage(with: url)
+    }
+    
+    private func stringConvertToDateTime(date:String) -> String {
+        let stringFormat = "yyyy-MM-dd HH:mm"
+        let formatter = DateFormatter()
+        formatter.dateFormat = stringFormat
+        formatter.locale = Locale(identifier: "ko")
+        guard let tempDate = formatter.date(from: date) else {
+            return ""
+        }
+        formatter.dateFormat = "HH"
+        
+        return formatter.string(from: tempDate)
+    }*/
 }
