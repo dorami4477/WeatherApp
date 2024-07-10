@@ -14,13 +14,13 @@ final class WeatherViewController: BaseViewController {
     private let temperatureLabel = UILabel()
     private let stateLabel = UILabel()
     private let minMaxTemLabel = UILabel()
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CVlayout())
+    private let tableView = UITableView()
 
     private let viewModel = WeatherViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
+        configureTableView()
         bindData()
     }
     override func configureHierarchy() {
@@ -28,7 +28,7 @@ final class WeatherViewController: BaseViewController {
         view.addSubview(temperatureLabel)
         view.addSubview(stateLabel)
         view.addSubview(minMaxTemLabel)
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
     }
     override func configureLayout() {
         cityNameLabel.snp.makeConstraints { make in
@@ -47,10 +47,10 @@ final class WeatherViewController: BaseViewController {
             make.top.equalTo(stateLabel.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
         }
-        collectionView.snp.makeConstraints { make in
+        tableView.snp.makeConstraints { make in
             make.top.equalTo(minMaxTemLabel.snp.bottom).offset(30)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(150)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
     }
@@ -59,7 +59,6 @@ final class WeatherViewController: BaseViewController {
         temperatureLabel.font = .systemFont(ofSize: 100, weight: .light)
         stateLabel.font = .systemFont(ofSize: 20)
         minMaxTemLabel.font = .systemFont(ofSize: 20)
-        //collectionView.backgroundColor = .gray
     }
     
     private func bindData(){
@@ -72,33 +71,60 @@ final class WeatherViewController: BaseViewController {
         }
         
         viewModel.outputEvery3HoursWeather.bind { _ in
-            self.collectionView.reloadData()
+            guard let currentCell = self.tableView.cellForRow(at: [0,0]) as? WeatherTableViewCell else { return }
+            currentCell.collectionView.reloadData()
         }
     }
     
-    private func configureCollectionView(){
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(WeatherCell.self, forCellWithReuseIdentifier: WeatherCell.identifier)
+    
+    private func configureTableView(){
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(WeatherTableViewCell.self, forCellReuseIdentifier: WeatherTableViewCell.identifier)
+        tableView.rowHeight = 150
     }
     
-    private func CVlayout() -> UICollectionViewLayout{
-        let layout = UICollectionViewFlowLayout()
-        let width = ( UIScreen.main.bounds.width - 80 ) / 5
-        layout.itemSize = CGSize(width: width, height: width * 2)
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        return layout
-    }
+
 
 }
 
+// MARK: - TableViewDalegate
+extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section{
+        case 0:
+            return "3시간 간격의 일기예보"
+        default:
+            return ""
+        }
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.identifier, for: indexPath) as? WeatherTableViewCell  else { return UITableViewCell()}
+            cell.collectionView.dataSource = self
+            cell.collectionView.delegate = self
+            cell.collectionView.register(WeatherCell.self, forCellWithReuseIdentifier: WeatherCell.identifier)
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
+    
+}
+    
+// MARK: - CollectionViewDelegate
 extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.outputEvery3HoursWeather.value?.count ?? 0
-
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,6 +133,5 @@ extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSo
         cell.configureData(value[indexPath.row])
         return cell
     }
-    
     
 }

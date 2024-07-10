@@ -41,6 +41,7 @@ class WeatherCell: UICollectionViewCell {
         temperatureLebel.snp.makeConstraints { make in
             make.top.equalTo(iconImageView.snp.bottom).offset(10)
             make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
     private func configureUI(){

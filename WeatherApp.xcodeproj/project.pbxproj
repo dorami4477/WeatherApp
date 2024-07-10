@@ -27,6 +27,7 @@
 		48EC817C2C3E839A00A1F68F /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC817B2C3E839A00A1F68F /* WeatherCell.swift */; };
 		48EC817F2C3E83C500A1F68F /* ReusableID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC817E2C3E83C500A1F68F /* ReusableID.swift */; };
 		48EC81822C3E8D6700A1F68F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 48EC81812C3E8D6700A1F68F /* Kingfisher */; };
+		48EC81842C3E939000A1F68F /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81832C3E939000A1F68F /* WeatherTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		48EC81782C3E781C00A1F68F /* Every3HoursFor5Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Every3HoursFor5Days.swift; sourceTree = "<group>"; };
 		48EC817B2C3E839A00A1F68F /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		48EC817E2C3E83C500A1F68F /* ReusableID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableID.swift; sourceTree = "<group>"; };
+		48EC81832C3E939000A1F68F /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				48EC817B2C3E839A00A1F68F /* WeatherCell.swift */,
+				48EC81832C3E939000A1F68F /* WeatherTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			files = (
 				48EC816F2C3E643300A1F68F /* NetworkManager.swift in Sources */,
 				48EC81792C3E781C00A1F68F /* Every3HoursFor5Days.swift in Sources */,
+				48EC81842C3E939000A1F68F /* WeatherTableViewCell.swift in Sources */,
 				48EC814B2C3E5BA100A1F68F /* WeatherViewController.swift in Sources */,
 				48EC81472C3E5BA100A1F68F /* AppDelegate.swift in Sources */,
 				48EC81712C3E663700A1F68F /* NetworkAPI.swift in Sources */,
