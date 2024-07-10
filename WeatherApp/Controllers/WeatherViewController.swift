@@ -6,12 +6,58 @@
 //
 
 import UIKit
+import SnapKit
 
-class WeatherViewController: UIViewController {
+final class WeatherViewController: BaseViewController {
+    
+    private let cityNameLabel = UILabel()
+    private let temperatureLabel = UILabel()
+    private let stateLabel = UILabel()
+    private let minMaxTemLabel = UILabel()
 
+    private let viewModel = WeatherViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        bindData()
+    }
+    override func configureHierarchy() {
+        view.addSubview(cityNameLabel)
+        view.addSubview(temperatureLabel)
+        view.addSubview(stateLabel)
+        view.addSubview(minMaxTemLabel)
+    }
+    override func configureLayout() {
+        cityNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            make.centerX.equalToSuperview()
+        }
+        temperatureLabel.snp.makeConstraints { make in
+            make.top.equalTo(cityNameLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        stateLabel.snp.makeConstraints { make in
+            make.top.equalTo(temperatureLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        minMaxTemLabel.snp.makeConstraints { make in
+            make.top.equalTo(stateLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
+    }
+    override func configureUI() {
+        
+    }
+    private func bindData(){
+        viewModel.outputWeatherData.bind { value in
+            guard let value else { return }
+            print(value)
+            self.cityNameLabel.text = value.name
+            self.temperatureLabel.text = "\(round(value.main.temp - 273.15))°"
+            self.stateLabel.text = value.weather.first?.description
+            self.minMaxTemLabel.text = "최고:\(round(value.main.tempMax - 273.15))° | 최저:\(round(value.main.tempMin - 273.15))°"
+        }
     }
 
 
