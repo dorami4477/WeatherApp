@@ -47,16 +47,23 @@ final class WeatherViewController: BaseViewController {
         
     }
     override func configureUI() {
-        
+        cityNameLabel.font = .systemFont(ofSize: 30)
+        temperatureLabel.font = .systemFont(ofSize: 100)
+        stateLabel.font = .systemFont(ofSize: 20)
+        minMaxTemLabel.font = .systemFont(ofSize: 20)
     }
     private func bindData(){
-        viewModel.outputWeatherData.bind { value in
+        viewModel.outputCurrentWeather.bind { value in
             guard let value else { return }
-            print(value)
             self.cityNameLabel.text = value.name
             self.temperatureLabel.text = "\(round(value.main.temp - 273.15))°"
-            self.stateLabel.text = value.weather.first?.description
-            self.minMaxTemLabel.text = "최고:\(round(value.main.tempMax - 273.15))° | 최저:\(round(value.main.tempMin - 273.15))°"
+            self.stateLabel.text = value.weather.first?.description.capitalized
+            self.minMaxTemLabel.text = "최고 : \(round(value.main.tempMax - 273.15))° | 최저 : \(round(value.main.tempMin - 273.15))°"
+        }
+        
+        viewModel.outputEvery3HoursWeather.bind { value in
+            //네트워크 성공
+            print(value)
         }
     }
 

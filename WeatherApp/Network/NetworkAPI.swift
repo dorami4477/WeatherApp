@@ -10,7 +10,7 @@ import Alamofire
 
 enum NetworkAPI{
     case city(id:Int)
-    case every3hours
+    case every3hours(lat:Double, lon:Double)
     case days
     
     var baseURL:String{
@@ -26,7 +26,7 @@ enum NetworkAPI{
         case .city:
             return URL(string:baseURL + "data/2.5/weather")!
         case .every3hours:
-            return URL(string:baseURL + "data/2.5/weather")!
+            return URL(string:baseURL + "data/2.5/forecast")!
         case .days:
             return URL(string:baseURL + "data/2.5/weather")!
         }
@@ -36,8 +36,8 @@ enum NetworkAPI{
         switch self {
         case .city(let id):
             return ["id":id, "appid":APIKey.weather]
-        case .every3hours:
-            return [:]
+        case .every3hours(let lat, let lon):
+            return ["lat":lat, "lon":lon, "appid":APIKey.weather]
         case .days:
             return [:]
         }
