@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class WeatherCell: UICollectionViewCell {
+final class HourWeatherCVCell: UICollectionViewCell {
     let timeLabel = UILabel()
     let iconImageView = UIImageView()
     let temperatureLebel = UILabel()
@@ -51,23 +51,13 @@ class WeatherCell: UICollectionViewCell {
     }
     
     func configureData(_ data:List){
-        timeLabel.text = stringConvertToDateTime(date:data.dtTxt) + "시"
+        let timeText = DateFormatterManager.shared.stringConvertToDateTime(date:data.dtTxt, newFormat: "HH") + "시"
+        timeLabel.text = timeText
         temperatureLebel.text = String(format: "%.1f", data.main.temp - 273.15) + "°"
         guard let icon = data.weather.first?.icon else { return }
         let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
         iconImageView.kf.setImage(with: url)
     }
     
-    private func stringConvertToDateTime(date:String) -> String {
-        let stringFormat = "yyyy-MM-dd HH:mm:ss"
-        let formatter = DateFormatter()
-        formatter.dateFormat = stringFormat
-        formatter.locale = Locale(identifier: "ko")
-        guard let tempDate = formatter.date(from: date) else {
-            return ""
-        }
-        formatter.dateFormat = "HH"
-        
-        return formatter.string(from: tempDate)
-    }
+
 }

@@ -10,13 +10,17 @@ import Foundation
 final class WeatherViewModel{
     var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
-    var outputEvery3HoursWeather:Observable<[List]?> = Observable(nil)
+    var outputEvery3HoursWeather:Observable<[List]> = Observable([])
+    var outputWeatherByDate:Observable<[String: (maxTemp: Double, minTemp: Double)]> = Observable([:])
     
     init(){
-            inputViewDidLoadTrigger.bind { _ in
-                self.fetchCurrentWeather(api:NetworkAPI.city(id: 1835847), model:CurrentWithCity.self)
-                self.fetchCurrentWeather(api: NetworkAPI.every3hours(lat: 37.498061, lon: 127.028759), model: Every3HoursFor5Days.self)
-            }
+        inputViewDidLoadTrigger.bind { _ in
+            self.fetchCurrentWeather(api:NetworkAPI.current(id: 1835847), model:CurrentWithCity.self)
+            self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: 1835847), model: Every3HoursFor5Days.self)
+        }
+        outputEvery3HoursWeather.bind { _ in
+            self.findMinMaxTemp()
+        }
     }
 
     private func fetchCurrentWeather<T:Decodable>(api:NetworkAPI, model:T.Type){
@@ -35,25 +39,21 @@ final class WeatherViewModel{
         }
     }
     
-    /*
-    func configureData(_ data:List){
-        timeLabel.text = data.dtTxt
-        temperatureLebel.text = "\(data.main.temp)"
-        guard let icon = data.weather.first?.icon else { return }
-        let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
-        iconImageView.kf.setImage(with: url)
-    }
-    
-    private func stringConvertToDateTime(date:String) -> String {
-        let stringFormat = "yyyy-MM-dd HH:mm"
-        let formatter = DateFormatter()
-        formatter.dateFormat = stringFormat
-        formatter.locale = Locale(identifier: "ko")
-        guard let tempDate = formatter.date(from: date) else {
-            return ""
+    func findMinMaxTemp(){
+        var groupedLists:[String: (maxTemp: Double, minTemp: Double)] = [:]
+
+        for list in outputEvery3HoursWeather.value {
+            //시간제외
+            let dateComponents = list.dtTxt.components(separatedBy: " ")[0]
+            
+            if let existing = groupedLists[dateComponents] {
+                let maxTemp = max(existing.maxTemp, list.main.tempMax)
+                let minTemp = min(existing.minTemp, list.main.tempMin)
+                groupedLists[dateComponents] = (maxTemp, minTemp)
+            } else {
+                groupedLists[dateComponents] = (list.main.tempMax, list.main.tempMin)
+            }
         }
-        formatter.dateFormat = "HH"
-        
-        return formatter.string(from: tempDate)
-    }*/
+        outputWeatherByDate.value = groupedLists
+    }
 }

@@ -37,6 +37,7 @@ struct List: Decodable {
     let visibility: Int
     let pop: Double
     let rain: Dictionary<String, Double>?
+    let snow: Dictionary<String, Double>?
     let sys: Dictionary<String, String>
     let dtTxt: String
     
@@ -50,6 +51,7 @@ struct List: Decodable {
         case visibility
         case pop
         case rain
+        case snow
         case sys
         case dtTxt = "dt_txt"
     }

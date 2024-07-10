@@ -7,17 +7,18 @@
 
 import UIKit
 
-class WeatherTableViewCell: UITableViewCell {
+final class HourWeatherTVCell: UITableViewCell {
 
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CVlayout())
 
     private func CVlayout() -> UICollectionViewLayout{
         let layout = UICollectionViewFlowLayout()
-        let width = ( UIScreen.main.bounds.width - 80 ) / 5
+        let width = ( UIScreen.main.bounds.width - 50 ) / 5
         layout.itemSize = CGSize(width: width, height: width * 2)
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         return layout
     }
     
@@ -27,6 +28,7 @@ class WeatherTableViewCell: UITableViewCell {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        collectionView.isScrollEnabled = true
     }
     
     required init?(coder: NSCoder) {
