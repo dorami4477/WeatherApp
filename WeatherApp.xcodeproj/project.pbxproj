@@ -30,6 +30,7 @@
 		48EC81842C3E939000A1F68F /* HourWeatherTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81832C3E939000A1F68F /* HourWeatherTVCell.swift */; };
 		48EC81862C3EBDDB00A1F68F /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81852C3EBDDB00A1F68F /* DateFormatterManager.swift */; };
 		48EC81882C3ED38A00A1F68F /* DayWeatherTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81872C3ED38A00A1F68F /* DayWeatherTVCell.swift */; };
+		48EC81982C40293200A1F68F /* WeatherFor5Ddays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81972C40293200A1F68F /* WeatherFor5Ddays.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		48EC81832C3E939000A1F68F /* HourWeatherTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourWeatherTVCell.swift; sourceTree = "<group>"; };
 		48EC81852C3EBDDB00A1F68F /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
 		48EC81872C3ED38A00A1F68F /* DayWeatherTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayWeatherTVCell.swift; sourceTree = "<group>"; };
+		48EC81972C40293200A1F68F /* WeatherFor5Ddays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherFor5Ddays.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			children = (
 				48EC816B2C3E620E00A1F68F /* CurrentWithCity.swift */,
 				48EC81782C3E781C00A1F68F /* Every3HoursFor5Days.swift */,
+				48EC81972C40293200A1F68F /* WeatherFor5Ddays.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				48EC81712C3E663700A1F68F /* NetworkAPI.swift in Sources */,
 				48EC81752C3E6E4F00A1F68F /* Observable.swift in Sources */,
 				48EC81772C3E73E500A1F68F /* BaseViewController.swift in Sources */,
+				48EC81982C40293200A1F68F /* WeatherFor5Ddays.swift in Sources */,
 				48EC816A2C3E603B00A1F68F /* APIKey.swift in Sources */,
 				48EC81862C3EBDDB00A1F68F /* DateFormatterManager.swift in Sources */,
 				48EC817F2C3E83C500A1F68F /* ReusableID.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class DayWeatherTVCell: UITableViewCell {
     let dayLabel = UILabel()
@@ -27,34 +28,42 @@ final class DayWeatherTVCell: UITableViewCell {
     }
     private func configureLayout(){
         dayLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
+            make.top.bottom.equalToSuperview().inset(15)
             make.leading.equalToSuperview().offset(30)
         }
         iconImageView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
-            make.leading.equalTo(dayLabel.snp.trailing).offset(5)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(60)
+            make.leading.equalTo(dayLabel.snp.trailing).offset(28)
         }
         minTempLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
-            make.leading.equalTo(iconImageView.snp.trailing).offset(5)
+            make.top.bottom.equalToSuperview().inset(15)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(10)
         }
         maxTempLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
-            make.leading.equalTo(minTempLabel.snp.trailing).offset(5)
+            make.top.bottom.equalToSuperview().inset(15)
+            make.leading.equalTo(minTempLabel.snp.trailing).offset(28)
             make.trailing.equalToSuperview().inset(30)
         }
     }
     private func configureUI(){
+        dayLabel.font = .systemFont(ofSize: 20)
+        minTempLabel.font = .systemFont(ofSize: 20)
+        maxTempLabel.font = .systemFont(ofSize: 20)
+        
+        minTempLabel.textColor = .lightGray
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureData(date:String, temp:(maxTemp: String, minTemp: String)){
-        dayLabel.text = date
-        iconImageView.image = UIImage(systemName: "heart")
-        maxTempLabel.text = temp.maxTemp
-        minTempLabel.text = temp.minTemp
+    func configureData(data:WeatherFor5Ddays){
+        dayLabel.text = data.date
+        let url = URL(string: "https://openweathermap.org/img/wn/\(data.icon)@2x.png")
+        iconImageView.kf.setImage(with: url)
+        maxTempLabel.text = data.maxTempString
+        minTempLabel.text = data.minTempString
     }
 }

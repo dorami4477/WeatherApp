@@ -121,7 +121,6 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         case 0:
             return 1
         default:
-            print(viewModel.outputWeatherByDate.value.count)
             return viewModel.outputWeatherByDate.value.count
         }
     }
@@ -135,9 +134,7 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             return cell
         }else if indexPath.section == 1{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DayWeatherTVCell.identifier, for: indexPath) as? DayWeatherTVCell  else { return UITableViewCell()}
-            let keys = viewModel.outputWeatherByDateKeys.value
-            guard let value = viewModel.outputWeatherByDate.value[keys[indexPath.row]] else { return UITableViewCell() }
-            cell.configureData(date: keys[indexPath.row], temp: value)
+            cell.configureData(data: viewModel.outputWeatherByDate.value[indexPath.row])
             return cell
         }
         return UITableViewCell()

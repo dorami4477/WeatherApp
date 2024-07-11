@@ -11,8 +11,8 @@ final class WeatherViewModel{
     var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
     var outputEvery3HoursWeather:Observable<[List]> = Observable([])
-    var outputWeatherByDate:Observable<[String: (maxTemp: String, minTemp: String)]> = Observable([:])
-    var outputWeatherByDateKeys:Observable<[String]> = Observable([])
+    var outputWeatherByDate:Observable<[WeatherFor5Ddays]> = Observable([])
+    //var outputWeatherByDateKeys:Observable<[String]> = Observable([])
     
     init(){
         inputViewDidLoadTrigger.bind { _ in
@@ -40,34 +40,30 @@ final class WeatherViewModel{
         }
     }
     
+    
     func findMinMaxTemp(){
-        var groupedLists:[String: (maxTemp: Double, minTemp: Double)] = [:]
+        var weatherData: [WeatherFor5Ddays] = []
 
         for list in outputEvery3HoursWeather.value {
-            
             let dateComponents = DateFormatterManager.shared.stringConvertToDateTime(date: list.dtTxt, newFormat: "EEEEEE")
-            //let dateComponents = list.dtTxt.components(separatedBy: " ")[0]
-            
-            if let existing = groupedLists[dateComponents] {
-                let maxTemp = max(existing.maxTemp, list.main.tempMax)
-                let minTemp = min(existing.minTemp, list.main.tempMin)
-                groupedLists[dateComponents] = (maxTemp, minTemp)
+
+            if let existingIndex = weatherData.firstIndex(where: { $0.date == dateComponents }) {
+                let maxTemp = max(weatherData[existingIndex].maxTemp, list.main.tempMax)
+                let minTemp = min(weatherData[existingIndex].minTemp, list.main.tempMin)
+                weatherData[existingIndex] = WeatherFor5Ddays(date: dateComponents, icon:list.weather[0].icon, minTemp: minTemp, maxTemp: maxTemp)
             } else {
-                groupedLists[dateComponents] = (list.main.tempMax, list.main.tempMin)
+                let newWeatherData = WeatherFor5Ddays(date: dateComponents, icon:list.weather[0].icon,  minTemp: list.main.tempMin, maxTemp: list.main.tempMax)
+                weatherData.append(newWeatherData)
             }
         }
-        
-        outputWeatherByDate.value = groupedLists.mapValues { 
-            (maxTemp: "최고" + String(format: "%.1f", $0.maxTemp - 273.15) + "°",
-             minTemp: "최저" + String(format: "%.1f", $0.minTemp - 273.15) + "°")
-        }
-        outputWeatherByDateKeys.value = groupedLists.map{$0.0}.sorted(by: <)
 
+        outputWeatherByDate.value = weatherData
 
     }
-    
-    
+  
 }
+
+
 
 
 
