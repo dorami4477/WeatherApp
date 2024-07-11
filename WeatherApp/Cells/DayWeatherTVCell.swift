@@ -50,4 +50,11 @@ final class DayWeatherTVCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configureData(date:String, temp:(maxTemp: String, minTemp: String)){
+        dayLabel.text = date
+        iconImageView.image = UIImage(systemName: "heart")
+        maxTempLabel.text = temp.maxTemp
+        minTempLabel.text = temp.minTemp
+    }
 }

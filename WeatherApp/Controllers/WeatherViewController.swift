@@ -72,7 +72,11 @@ final class WeatherViewController: BaseViewController {
         
         viewModel.outputEvery3HoursWeather.bind { _ in
             guard let currentCell = self.tableView.cellForRow(at: [0,0]) as? HourWeatherTVCell else { return }
+            self.viewModel.findMinMaxTemp()
             currentCell.collectionView.reloadData()
+        }
+        viewModel.outputWeatherByDate.bind{ _ in
+            self.tableView.reloadData()
         }
     }
     
@@ -113,7 +117,13 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch section{
+        case 0:
+            return 1
+        default:
+            print(viewModel.outputWeatherByDate.value.count)
+            return viewModel.outputWeatherByDate.value.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,10 +135,9 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             return cell
         }else if indexPath.section == 1{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DayWeatherTVCell.identifier, for: indexPath) as? DayWeatherTVCell  else { return UITableViewCell()}
-            cell.dayLabel.text = "월"
-            cell.iconImageView.image = UIImage(systemName: "heart")
-            cell.maxTempLabel.text = "ddd"
-            cell.minTempLabel.text = "dfd"
+            let keys = viewModel.outputWeatherByDateKeys.value
+            guard let value = viewModel.outputWeatherByDate.value[keys[indexPath.row]] else { return UITableViewCell() }
+            cell.configureData(date: keys[indexPath.row], temp: value)
             return cell
         }
         return UITableViewCell()

@@ -11,7 +11,8 @@ final class WeatherViewModel{
     var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
     var outputEvery3HoursWeather:Observable<[List]> = Observable([])
-    var outputWeatherByDate:Observable<[String: (maxTemp: Double, minTemp: Double)]> = Observable([:])
+    var outputWeatherByDate:Observable<[String: (maxTemp: String, minTemp: String)]> = Observable([:])
+    var outputWeatherByDateKeys:Observable<[String]> = Observable([])
     
     init(){
         inputViewDidLoadTrigger.bind { _ in
@@ -43,8 +44,9 @@ final class WeatherViewModel{
         var groupedLists:[String: (maxTemp: Double, minTemp: Double)] = [:]
 
         for list in outputEvery3HoursWeather.value {
-            //시간제외
-            let dateComponents = list.dtTxt.components(separatedBy: " ")[0]
+            
+            let dateComponents = DateFormatterManager.shared.stringConvertToDateTime(date: list.dtTxt, newFormat: "EEEEEE")
+            //let dateComponents = list.dtTxt.components(separatedBy: " ")[0]
             
             if let existing = groupedLists[dateComponents] {
                 let maxTemp = max(existing.maxTemp, list.main.tempMax)
@@ -54,6 +56,18 @@ final class WeatherViewModel{
                 groupedLists[dateComponents] = (list.main.tempMax, list.main.tempMin)
             }
         }
-        outputWeatherByDate.value = groupedLists
+        
+        outputWeatherByDate.value = groupedLists.mapValues { 
+            (maxTemp: "최고" + String(format: "%.1f", $0.maxTemp - 273.15) + "°",
+             minTemp: "최저" + String(format: "%.1f", $0.minTemp - 273.15) + "°")
+        }
+        outputWeatherByDateKeys.value = groupedLists.map{$0.0}.sorted(by: <)
+
+
     }
+    
+    
 }
+
+
+

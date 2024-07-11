@@ -24,11 +24,10 @@ final class HourWeatherTVCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(collectionView)
+        contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        collectionView.isScrollEnabled = true
     }
     
     required init?(coder: NSCoder) {
