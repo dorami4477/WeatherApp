@@ -16,7 +16,7 @@ struct CurrentWithCity:Decodable{
     let wind: Wind
     let clouds: Dictionary<String, Double>
     let dt: Int
-    let sys: Sys
+    let sys: Sys?
     let timezone, id: Int
     let name: String
     let cod: Int
@@ -46,9 +46,10 @@ struct Main: Decodable {
 
 // MARK: - Sys
 struct Sys: Decodable {
-    let type, id: Int
-    let country: String
-    let sunrise, sunset: Int
+    let type: Int?
+    let id: Int?
+    let country: String?
+    let sunrise, sunset: Int?
 }
 
 

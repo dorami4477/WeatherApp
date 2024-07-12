@@ -9,18 +9,25 @@ import Foundation
 
 final class WeatherViewModel{
     var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
+    var inputCityID = Observable(1835847)
+    
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
     var outputEvery3HoursWeather:Observable<[List]> = Observable([])
     var outputWeatherByDate:Observable<[WeatherFor5Ddays]> = Observable([])
-    //var outputWeatherByDateKeys:Observable<[String]> = Observable([])
+    
     
     init(){
-        inputViewDidLoadTrigger.bind { _ in
-            self.fetchCurrentWeather(api:NetworkAPI.current(id: 1835847), model:CurrentWithCity.self)
-            self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: 1835847), model: Every3HoursFor5Days.self)
-        }
+      /* inputViewDidLoadTrigger.bind { _ in
+            self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
+            self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: self.inputCityID.value), model: Every3HoursFor5Days.self)
+        }*/
         outputEvery3HoursWeather.bind { _ in
             self.findMinMaxTemp()
+        }
+        inputCityID.bind { value in
+            print(value)
+            self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
+            self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: self.inputCityID.value), model: Every3HoursFor5Days.self)
         }
     }
 

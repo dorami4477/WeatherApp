@@ -16,7 +16,7 @@ final class WeatherViewController: BaseViewController {
     private let minMaxTemLabel = UILabel()
     private let tableView = UITableView()
 
-    private let viewModel = WeatherViewModel()
+    let viewModel = WeatherViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +62,8 @@ final class WeatherViewController: BaseViewController {
     }
     
     private func bindData(){
+        //viewModel.inputCityID.value = 1835847
+
         viewModel.outputCurrentWeather.bind { value in
             guard let value else { return }
             self.cityNameLabel.text = value.name
@@ -89,7 +91,9 @@ final class WeatherViewController: BaseViewController {
     }
     
 
-
+    deinit {
+        print("weather deinit")
+    }
 }
 
 // MARK: - TableViewDalegate

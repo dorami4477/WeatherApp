@@ -36,6 +36,8 @@
 		48EC819E2C40BBC900A1F68F /* CitySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC819D2C40BBC900A1F68F /* CitySearchViewController.swift */; };
 		48EC81A32C40C43500A1F68F /* CityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81A22C40C43500A1F68F /* CityList.swift */; };
 		48EC81A82C40C7BA00A1F68F /* CityList.json in Resources */ = {isa = PBXBuildFile; fileRef = 48EC81A62C40C7BA00A1F68F /* CityList.json */; };
+		48EC81AA2C40D0A700A1F68F /* CityListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */; };
+		48EC81AC2C40D1AF00A1F68F /* CityListVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81AB2C40D1AF00A1F68F /* CityListVIewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		48EC819D2C40BBC900A1F68F /* CitySearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchViewController.swift; sourceTree = "<group>"; };
 		48EC81A22C40C43500A1F68F /* CityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityList.swift; sourceTree = "<group>"; };
 		48EC81A72C40C7BA00A1F68F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/CityList.json; sourceTree = "<group>"; };
+		48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListTVCell.swift; sourceTree = "<group>"; };
+		48EC81AB2C40D1AF00A1F68F /* CityListVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListVIewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,10 +126,10 @@
 			isa = PBXGroup;
 			children = (
 				48EC814A2C3E5BA100A1F68F /* WeatherViewController.swift */,
+				48EC819D2C40BBC900A1F68F /* CitySearchViewController.swift */,
+				48EC819B2C40BB1200A1F68F /* MapViewController.swift */,
 				48EC81762C3E73E500A1F68F /* BaseViewController.swift */,
 				48EC81992C40BAD200A1F68F /* TabBarController.swift */,
-				48EC819B2C40BB1200A1F68F /* MapViewController.swift */,
-				48EC819D2C40BBC900A1F68F /* CitySearchViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -145,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				48EC81722C3E6E1400A1F68F /* WeatherViewModel.swift */,
+				48EC81AB2C40D1AF00A1F68F /* CityListVIewModel.swift */,
 				48EC81742C3E6E4F00A1F68F /* Observable.swift */,
 			);
 			path = ViewModels;
@@ -165,6 +170,7 @@
 				48EC817B2C3E839A00A1F68F /* HourWeatherCVCell.swift */,
 				48EC81832C3E939000A1F68F /* HourWeatherTVCell.swift */,
 				48EC81872C3ED38A00A1F68F /* DayWeatherTVCell.swift */,
+				48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -272,8 +278,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48EC81AC2C40D1AF00A1F68F /* CityListVIewModel.swift in Sources */,
 				48EC816F2C3E643300A1F68F /* NetworkManager.swift in Sources */,
 				48EC81792C3E781C00A1F68F /* Every3HoursFor5Days.swift in Sources */,
+				48EC81AA2C40D0A700A1F68F /* CityListTVCell.swift in Sources */,
 				48EC81842C3E939000A1F68F /* HourWeatherTVCell.swift in Sources */,
 				48EC819A2C40BAD200A1F68F /* TabBarController.swift in Sources */,
 				48EC81A32C40C43500A1F68F /* CityList.swift in Sources */,
