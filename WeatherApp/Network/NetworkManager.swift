@@ -37,4 +37,17 @@ final class NetworkManager{
             }
         }
     }
+    
+    func fetchCityList(){
+        guard let path = Bundle.main.path(forResource: "CityList", ofType: "json") else { return }
+        guard let jsonString = try? String(contentsOfFile: path) else { return }
+     
+        do {
+            guard let data = jsonString.data(using: .utf8) else { return }
+            let cities = try JSONDecoder().decode([CityList].self, from: data)
+
+        } catch {
+            print("Error decoding JSON: \(error)")
+        }
+    }
 }
