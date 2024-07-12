@@ -88,6 +88,7 @@ final class WeatherViewController: BaseViewController {
         tableView.delegate = self
         tableView.register(HourWeatherTVCell.self, forCellReuseIdentifier: HourWeatherTVCell.identifier)
         tableView.register(DayWeatherTVCell.self, forCellReuseIdentifier: DayWeatherTVCell.identifier)
+        tableView.register(WeatherInfoTVCell.self, forCellReuseIdentifier: WeatherInfoTVCell.identifier)
     }
     
 

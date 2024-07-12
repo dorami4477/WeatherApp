@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CityListTVCell: UITableViewCell {
+class CityListTVCell: BaseTableViewCell {
     let iconLabel = UILabel()
     let nameLabel = UILabel()
     let countryLabel = UILabel()
@@ -18,22 +18,12 @@ class CityListTVCell: UITableViewCell {
         }
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         addSubview(iconLabel)
         addSubview(nameLabel)
         addSubview(countryLabel)
     }
-    private func configureLayout(){
+    override func configureLayout(){
         iconLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(20)
@@ -48,7 +38,7 @@ class CityListTVCell: UITableViewCell {
             make.bottom.equalToSuperview().inset(10)
         }
     }
-    private func configureUI(){
+    override func configureView(){
         iconLabel.text = "#"
         iconLabel.font = .systemFont(ofSize: 20)
         nameLabel.font = .systemFont(ofSize: 20)

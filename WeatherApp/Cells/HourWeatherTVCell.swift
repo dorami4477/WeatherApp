@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HourWeatherTVCell: UITableViewCell {
+final class HourWeatherTVCell: BaseTableViewCell {
 
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CVlayout())
 
@@ -30,8 +30,5 @@ final class HourWeatherTVCell: UITableViewCell {
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
 }

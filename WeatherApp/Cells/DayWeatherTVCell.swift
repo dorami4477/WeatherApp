@@ -8,25 +8,21 @@
 import UIKit
 import Kingfisher
 
-final class DayWeatherTVCell: UITableViewCell {
+final class DayWeatherTVCell: BaseTableViewCell {
     let dayLabel = UILabel()
     let iconImageView = UIImageView()
     let minTempLabel = UILabel()
     let maxTempLabel = UILabel()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-    }
-    private func configureHierarchy(){
+
+    override func configureHierarchy(){
         addSubview(dayLabel)
         addSubview(iconImageView)
         addSubview(minTempLabel)
         addSubview(maxTempLabel)
     }
-    private func configureLayout(){
+    
+    override func configureLayout(){
         dayLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(15)
             make.leading.equalToSuperview().offset(30)
@@ -46,17 +42,14 @@ final class DayWeatherTVCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(30)
         }
     }
-    private func configureUI(){
+    
+    override func configureView(){
         dayLabel.font = .systemFont(ofSize: 20)
         minTempLabel.font = .systemFont(ofSize: 20)
         maxTempLabel.font = .systemFont(ofSize: 20)
         
         minTempLabel.textColor = .lightGray
         
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func configureData(data:WeatherFor5Ddays){
