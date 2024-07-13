@@ -70,6 +70,8 @@ final class WeatherViewController: BaseViewController {
             self.temperatureLabel.text = value.main.tempString
             self.stateLabel.text = value.weather.first?.description.capitalized
             self.minMaxTemLabel.text = value.main.tempMaxString + " | " + value.main.tempMinString
+            
+            self.tableView.reloadData()
         }
         
         viewModel.outputEvery3HoursWeather.bind { _ in
@@ -104,6 +106,8 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         switch indexPath.section{
         case 0:
             return 150
+        case 2:
+            return 230
         default:
             return UITableView.automaticDimension
         }
@@ -113,20 +117,26 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         switch section{
         case 0:
             return "3시간 간격의 일기예보"
-        default:
+        case 1:
             return "5일간의 일기예보"
+        case 2:
+            return "위치"
+        default:
+            return ""
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
-        case 0:
+        case 0, 2:
             return 1
-        default:
+        case 1:
             return viewModel.outputWeatherByDate.value.count
+        default:
+            return 0
         }
     }
     
@@ -141,7 +151,12 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DayWeatherTVCell.identifier, for: indexPath) as? DayWeatherTVCell  else { return UITableViewCell()}
             cell.configureData(data: viewModel.outputWeatherByDate.value[indexPath.row])
             return cell
+        }else if indexPath.section == 2{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherInfoTVCell.identifier, for: indexPath) as? WeatherInfoTVCell  else { return UITableViewCell()}
+            cell.data = viewModel.outputCurrentWeather.value
+            return cell
         }
+        
         return UITableViewCell()
     }
     
