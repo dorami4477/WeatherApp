@@ -74,6 +74,7 @@ struct Sys: Decodable {
 struct Wind: Decodable {
     let speed: Double
     let deg: Double
+    let gust:Double?
 }
 
 

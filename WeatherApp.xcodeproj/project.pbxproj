@@ -38,8 +38,10 @@
 		48EC81A82C40C7BA00A1F68F /* CityList.json in Resources */ = {isa = PBXBuildFile; fileRef = 48EC81A62C40C7BA00A1F68F /* CityList.json */; };
 		48EC81AA2C40D0A700A1F68F /* CityListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */; };
 		48EC81AC2C40D1AF00A1F68F /* CityListVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81AB2C40D1AF00A1F68F /* CityListVIewModel.swift */; };
-		48EC81AE2C41781200A1F68F /* WeatherInfoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81AD2C41781200A1F68F /* WeatherInfoTVCell.swift */; };
+		48EC81AE2C41781200A1F68F /* LocationTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81AD2C41781200A1F68F /* LocationTVCell.swift */; };
 		48EC81B02C41785200A1F68F /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81AF2C41785200A1F68F /* BaseTableViewCell.swift */; };
+		48EC81B22C422CA000A1F68F /* WeatherInfoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81B12C422CA000A1F68F /* WeatherInfoTVCell.swift */; };
+		48EC81B42C422D5E00A1F68F /* WeatherInfoCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC81B32C422D5E00A1F68F /* WeatherInfoCVCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,8 +74,10 @@
 		48EC81A72C40C7BA00A1F68F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/CityList.json; sourceTree = "<group>"; };
 		48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListTVCell.swift; sourceTree = "<group>"; };
 		48EC81AB2C40D1AF00A1F68F /* CityListVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListVIewModel.swift; sourceTree = "<group>"; };
-		48EC81AD2C41781200A1F68F /* WeatherInfoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoTVCell.swift; sourceTree = "<group>"; };
+		48EC81AD2C41781200A1F68F /* LocationTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTVCell.swift; sourceTree = "<group>"; };
 		48EC81AF2C41785200A1F68F /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		48EC81B12C422CA000A1F68F /* WeatherInfoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoTVCell.swift; sourceTree = "<group>"; };
+		48EC81B32C422D5E00A1F68F /* WeatherInfoCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoCVCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,8 +179,10 @@
 				48EC81832C3E939000A1F68F /* HourWeatherTVCell.swift */,
 				48EC81872C3ED38A00A1F68F /* DayWeatherTVCell.swift */,
 				48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */,
-				48EC81AD2C41781200A1F68F /* WeatherInfoTVCell.swift */,
+				48EC81AD2C41781200A1F68F /* LocationTVCell.swift */,
 				48EC81AF2C41785200A1F68F /* BaseTableViewCell.swift */,
+				48EC81B12C422CA000A1F68F /* WeatherInfoTVCell.swift */,
+				48EC81B32C422D5E00A1F68F /* WeatherInfoCVCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -301,13 +307,15 @@
 				48EC81752C3E6E4F00A1F68F /* Observable.swift in Sources */,
 				48EC81772C3E73E500A1F68F /* BaseViewController.swift in Sources */,
 				48EC81982C40293200A1F68F /* WeatherFor5Ddays.swift in Sources */,
-				48EC81AE2C41781200A1F68F /* WeatherInfoTVCell.swift in Sources */,
+				48EC81B42C422D5E00A1F68F /* WeatherInfoCVCell.swift in Sources */,
+				48EC81AE2C41781200A1F68F /* LocationTVCell.swift in Sources */,
 				48EC816A2C3E603B00A1F68F /* APIKey.swift in Sources */,
 				48EC81862C3EBDDB00A1F68F /* DateFormatterManager.swift in Sources */,
 				48EC817F2C3E83C500A1F68F /* ReusableID.swift in Sources */,
 				48EC817C2C3E839A00A1F68F /* HourWeatherCVCell.swift in Sources */,
 				48EC81732C3E6E1400A1F68F /* WeatherViewModel.swift in Sources */,
 				48EC81492C3E5BA100A1F68F /* SceneDelegate.swift in Sources */,
+				48EC81B22C422CA000A1F68F /* WeatherInfoTVCell.swift in Sources */,
 				48EC816C2C3E620E00A1F68F /* CurrentWithCity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -70,8 +70,12 @@ final class WeatherViewController: BaseViewController {
             self.temperatureLabel.text = value.main.tempString
             self.stateLabel.text = value.weather.first?.description.capitalized
             self.minMaxTemLabel.text = value.main.tempMaxString + " | " + value.main.tempMinString
-            
+            self.viewModel.getAdditionalWeatherInfo()
             self.tableView.reloadData()
+        }
+        viewModel.outputAdditionalInfo.bind{ _ in
+            guard let currentCell = self.tableView.cellForRow(at: [3,0]) as? WeatherInfoTVCell else { return }
+            currentCell.collectionView.reloadData()
         }
         
         viewModel.outputEvery3HoursWeather.bind { _ in
@@ -90,6 +94,7 @@ final class WeatherViewController: BaseViewController {
         tableView.delegate = self
         tableView.register(HourWeatherTVCell.self, forCellReuseIdentifier: HourWeatherTVCell.identifier)
         tableView.register(DayWeatherTVCell.self, forCellReuseIdentifier: DayWeatherTVCell.identifier)
+        tableView.register(LocationTVCell.self, forCellReuseIdentifier: LocationTVCell.identifier)
         tableView.register(WeatherInfoTVCell.self, forCellReuseIdentifier: WeatherInfoTVCell.identifier)
     }
     
@@ -108,6 +113,8 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             return 150
         case 2:
             return 230
+        case 3:
+            return  UIScreen.main.bounds.width
         default:
             return UITableView.automaticDimension
         }
@@ -126,17 +133,15 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
-        case 0, 2:
-            return 1
         case 1:
             return viewModel.outputWeatherByDate.value.count
         default:
-            return 0
+            return 1
         }
     }
     
@@ -146,14 +151,22 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             cell.collectionView.dataSource = self
             cell.collectionView.delegate = self
             cell.collectionView.register(HourWeatherCVCell.self, forCellWithReuseIdentifier: HourWeatherCVCell.identifier)
+            cell.collectionView.tag = 0
             return cell
         }else if indexPath.section == 1{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DayWeatherTVCell.identifier, for: indexPath) as? DayWeatherTVCell  else { return UITableViewCell()}
             cell.configureData(data: viewModel.outputWeatherByDate.value[indexPath.row])
             return cell
         }else if indexPath.section == 2{
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherInfoTVCell.identifier, for: indexPath) as? WeatherInfoTVCell  else { return UITableViewCell()}
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationTVCell.identifier, for: indexPath) as? LocationTVCell  else { return UITableViewCell()}
             cell.data = viewModel.outputCurrentWeather.value
+            return cell
+        }else if indexPath.section == 3{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherInfoTVCell.identifier, for: indexPath) as? WeatherInfoTVCell  else { return UITableViewCell()}
+            cell.collectionView.dataSource = self
+            cell.collectionView.delegate = self
+            cell.collectionView.register(WeatherInfoCVCell.self, forCellWithReuseIdentifier: WeatherInfoCVCell.identifier)
+            cell.collectionView.tag = 1
             return cell
         }
         
@@ -167,14 +180,27 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
 extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.outputEvery3HoursWeather.value.count
+        if collectionView.tag == 0{
+            return viewModel.outputEvery3HoursWeather.value.count
+        }else{
+            return viewModel.outputAdditionalInfo.value.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourWeatherCVCell.identifier, for: indexPath) as? HourWeatherCVCell else { return UICollectionViewCell()}
-        let value = viewModel.outputEvery3HoursWeather.value
-        cell.configureData(value[indexPath.row])
-        return cell
+        if collectionView.tag == 0{
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourWeatherCVCell.identifier, for: indexPath) as? HourWeatherCVCell else { return UICollectionViewCell()}
+            let value = viewModel.outputEvery3HoursWeather.value
+            cell.configureData(value[indexPath.row])
+            return cell
+        }else{
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherInfoCVCell.identifier, for: indexPath) as? WeatherInfoCVCell else { return UICollectionViewCell()}
+            cell.data = viewModel.outputAdditionalInfo.value[indexPath.row]
+            return cell
+        }
+
     }
     
 }
+
+    

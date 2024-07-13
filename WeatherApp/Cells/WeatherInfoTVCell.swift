@@ -2,49 +2,31 @@
 //  WeatherInfoTVCell.swift
 //  WeatherApp
 //
-//  Created by 박다현 on 7/12/24.
+//  Created by 박다현 on 7/13/24.
 //
 
 import UIKit
-import MapKit
 
-final class WeatherInfoTVCell: BaseTableViewCell {
-    
-    private var mapView: MKMapView!
-    
-    var data:CurrentWithCity?{
-        didSet{
-            guard let data else { return }
-            guard let lat = data.coord["lat"], let lon = data.coord["lon"] else { return }
-            configureMap(lat:lat, lon:lon, title: data.name, weather:data.weather.first!.description.capitalized)
-        }
+class WeatherInfoTVCell: BaseTableViewCell {
+
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CVlayout())
+
+    private func CVlayout() -> UICollectionViewLayout{
+        let layout = UICollectionViewFlowLayout()
+        let width = ( UIScreen.main.bounds.width - 50 ) / 2
+        layout.itemSize = CGSize(width: width, height: width)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        return layout
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    override func configureHierarchy() {
-        mapView = MKMapView(frame: contentView.bounds)
-        contentView.addSubview(mapView)
-    }
-    
-    override func configureLayout() {
-        mapView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview().inset(10)
-            make.horizontalEdges.equalToSuperview().inset(20)
+        contentView.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
-    func configureMap(lat:Double, lon:Double, title:String, weather:String) {
-        let center = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-        mapView.setRegion(region, animated: false)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        annotation.title = title
-        annotation.subtitle = weather
-        mapView.addAnnotation(annotation)
-    }
-    
 }
