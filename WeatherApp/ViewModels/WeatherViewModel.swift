@@ -26,7 +26,6 @@ final class WeatherViewModel{
             self.findMinMaxTemp()
         }
         inputCityID.bind { value in
-            print(value)
             self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
             self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: self.inputCityID.value), model: Every3HoursFor5Days.self)
         }

@@ -59,6 +59,12 @@ final class WeatherViewController: BaseViewController {
         temperatureLabel.font = .systemFont(ofSize: 100, weight: .light)
         stateLabel.font = .systemFont(ofSize: 20)
         minMaxTemLabel.font = .systemFont(ofSize: 20)
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "sky")
+        backgroundImage.alpha = 0.3
+        backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
+        self.view.insertSubview(backgroundImage, at: 0)
     }
     
     private func bindData(){
@@ -96,6 +102,7 @@ final class WeatherViewController: BaseViewController {
         tableView.register(DayWeatherTVCell.self, forCellReuseIdentifier: DayWeatherTVCell.identifier)
         tableView.register(LocationTVCell.self, forCellReuseIdentifier: LocationTVCell.identifier)
         tableView.register(WeatherInfoTVCell.self, forCellReuseIdentifier: WeatherInfoTVCell.identifier)
+        tableView.backgroundColor = .clear
     }
     
 
@@ -148,6 +155,7 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: HourWeatherTVCell.identifier, for: indexPath) as? HourWeatherTVCell  else { return UITableViewCell()}
+            cell.backgroundColor = UIColor.clear
             cell.collectionView.dataSource = self
             cell.collectionView.delegate = self
             cell.collectionView.register(HourWeatherCVCell.self, forCellWithReuseIdentifier: HourWeatherCVCell.identifier)
@@ -155,14 +163,17 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             return cell
         }else if indexPath.section == 1{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DayWeatherTVCell.identifier, for: indexPath) as? DayWeatherTVCell  else { return UITableViewCell()}
+            cell.backgroundColor = UIColor.clear
             cell.configureData(data: viewModel.outputWeatherByDate.value[indexPath.row])
             return cell
         }else if indexPath.section == 2{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationTVCell.identifier, for: indexPath) as? LocationTVCell  else { return UITableViewCell()}
+            cell.backgroundColor = UIColor.clear
             cell.data = viewModel.outputCurrentWeather.value
             return cell
         }else if indexPath.section == 3{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherInfoTVCell.identifier, for: indexPath) as? WeatherInfoTVCell  else { return UITableViewCell()}
+            cell.backgroundColor = UIColor.clear
             cell.collectionView.dataSource = self
             cell.collectionView.delegate = self
             cell.collectionView.register(WeatherInfoCVCell.self, forCellWithReuseIdentifier: WeatherInfoCVCell.identifier)

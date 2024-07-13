@@ -25,6 +25,7 @@ class WeatherInfoTVCell: BaseTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(collectionView)
+        collectionView.backgroundColor = .clear
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

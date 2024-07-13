@@ -48,6 +48,7 @@ final class HourWeatherCVCell: UICollectionViewCell {
         timeLabel.textAlignment = .center
         temperatureLebel.textAlignment = .center
         iconImageView.contentMode = .scaleAspectFit
+        contentView.backgroundColor = .clear
     }
     
     func configureData(_ data:List){
