@@ -8,7 +8,6 @@
 import Foundation
 
 final class WeatherViewModel{
-    var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
     var inputCityID = Observable(1835847)
     
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
@@ -18,13 +17,6 @@ final class WeatherViewModel{
     
     
     init(){
-      /* inputViewDidLoadTrigger.bind { _ in
-            self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
-            self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: self.inputCityID.value), model: Every3HoursFor5Days.self)
-        }*/
-        outputEvery3HoursWeather.bind { _ in
-            self.findMinMaxTemp()
-        }
         inputCityID.bind { value in
             self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
             self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: self.inputCityID.value), model: Every3HoursFor5Days.self)
@@ -80,11 +72,7 @@ final class WeatherViewModel{
   
 }
 
-struct AdditionalWeatherInfo{
-    let title:String
-    let Info:String
-    let detail:String?
-}
+
 
 
 

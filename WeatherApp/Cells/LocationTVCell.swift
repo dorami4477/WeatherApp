@@ -35,7 +35,7 @@ final class LocationTVCell: BaseTableViewCell {
             make.horizontalEdges.equalToSuperview().inset(20)
         }
     }
-    func configureMap(lat:Double, lon:Double, title:String, weather:String) {
+    private func configureMap(lat:Double, lon:Double, title:String, weather:String) {
         let center = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         mapView.setRegion(region, animated: false)
