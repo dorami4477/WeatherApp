@@ -21,8 +21,15 @@ final class WeatherViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        configureNavigation()
         bindData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.isToolbarHidden = false
+    }
+    
     override func configureHierarchy() {
         view.addSubview(cityNameLabel)
         view.addSubview(temperatureLabel)
@@ -32,7 +39,7 @@ final class WeatherViewController: BaseViewController {
     }
     override func configureLayout() {
         cityNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(25)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.centerX.equalToSuperview()
         }
         temperatureLabel.snp.makeConstraints { make in
@@ -67,9 +74,24 @@ final class WeatherViewController: BaseViewController {
         self.view.insertSubview(backgroundImage, at: 0)
     }
     
-    private func bindData(){
-        //viewModel.inputCityID.value = 1835847
+    private func configureNavigation(){
+        navigationController?.isToolbarHidden = false
+        let appearance = UIToolbarAppearance()
 
+        navigationController?.toolbar.scrollEdgeAppearance = appearance
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let mapButton = UIBarButtonItem(image: UIImage(systemName: "map"), style: .plain, target: self, action: #selector(mapButtonTapped))
+        let searchButton = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(searchButtonTapped))
+        
+        mapButton.tintColor = .white
+        searchButton.tintColor = .white
+        let barItems = [mapButton, flexibleSpace, searchButton]
+        self.toolbarItems = barItems
+    
+    }
+    
+    private func bindData(){
         viewModel.outputCurrentWeather.bind { value in
             guard let value else { return }
             self.cityNameLabel.text = value.name
@@ -105,11 +127,17 @@ final class WeatherViewController: BaseViewController {
         tableView.backgroundColor = .clear
     }
     
-
-    deinit {
-        print("weather deinit")
+    @objc func mapButtonTapped(){
+        let vc = MapViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
-}
+    
+    @objc func searchButtonTapped(){
+        let vc = CitySearchViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}//:class
 
 // MARK: - TableViewDalegate
 extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{

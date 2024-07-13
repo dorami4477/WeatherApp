@@ -11,7 +11,6 @@ final class CitySearchViewController: BaseViewController{
 
     private let tableView = UITableView()
     let viewModel = CityListVIewModel()
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +19,6 @@ final class CitySearchViewController: BaseViewController{
         bindData()
     }
     
-    deinit {
-        print("citySearch deinit")
-    }
     override func configureHierarchy() {
         view.addSubview(tableView)
     }
@@ -59,6 +55,7 @@ final class CitySearchViewController: BaseViewController{
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.isToolbarHidden = true
     }
 
     @objc func menuButtonTapped(){}
@@ -75,9 +72,13 @@ extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let weatherVC = WeatherViewController()
-        weatherVC.viewModel.inputCityID.value = viewModel.outputFoundCities.value[indexPath.row].id
-        navigationController?.pushViewController(weatherVC, animated: true)
+        guard let viewControllerStack = self.navigationController?.viewControllers else { return }
+        for viewController in viewControllerStack {
+            if let hereView = viewController as? WeatherViewController {
+                hereView.viewModel.inputCityID.value = viewModel.outputFoundCities.value[indexPath.row].id
+                self.navigationController?.popToViewController(hereView, animated: true)
+            }
+        }
     }
 }
 
