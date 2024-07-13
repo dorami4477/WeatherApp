@@ -67,9 +67,9 @@ final class WeatherViewController: BaseViewController {
         viewModel.outputCurrentWeather.bind { value in
             guard let value else { return }
             self.cityNameLabel.text = value.name
-            self.temperatureLabel.text = String(format: "%.1f", value.main.temp - 273.15) + "°"
+            self.temperatureLabel.text = value.main.tempString
             self.stateLabel.text = value.weather.first?.description.capitalized
-            self.minMaxTemLabel.text = "최고 : \(String(format: "%.1f", value.main.tempMax - 273.15))° | 최저 : \(String(format: "%.1f", value.main.tempMin - 273.15))°"
+            self.minMaxTemLabel.text = value.main.tempMaxString + " | " + value.main.tempMinString
         }
         
         viewModel.outputEvery3HoursWeather.bind { _ in
