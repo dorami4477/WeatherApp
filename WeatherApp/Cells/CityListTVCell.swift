@@ -7,10 +7,10 @@
 
 import UIKit
 
-class CityListTVCell: BaseTableViewCell {
-    let iconLabel = UILabel()
-    let nameLabel = UILabel()
-    let countryLabel = UILabel()
+final class CityListTVCell: BaseTableViewCell {
+    private let iconLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let countryLabel = UILabel()
     
     var data:CityList = CityList(id: 0, name: "", state: "", country: "", coord: Coord(lon: 0, lat: 0)){
         didSet{

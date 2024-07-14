@@ -10,7 +10,7 @@ import UIKit
 final class CitySearchViewController: BaseViewController{
 
     private let tableView = UITableView()
-    let viewModel = CityListVIewModel()
+    private let viewModel = CityListVIewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ final class CitySearchViewController: BaseViewController{
         }
     }
     
-    func bindData(){
+    private func bindData(){
         //viewModel.inputViewDidLoadTrigger.value = ()
         viewModel.outputFoundCities.bind { _ in
             self.tableView.reloadData()
@@ -58,7 +58,7 @@ final class CitySearchViewController: BaseViewController{
         navigationController?.isToolbarHidden = true
     }
 
-    @objc func menuButtonTapped(){}
+    @objc private func menuButtonTapped(){}
 }
 extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,7 +75,7 @@ extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
         guard let viewControllerStack = self.navigationController?.viewControllers else { return }
         for viewController in viewControllerStack {
             if let hereView = viewController as? WeatherViewController {
-                hereView.viewModel.inputCityID.value = viewModel.outputFoundCities.value[indexPath.row].id
+                hereView.viewModel.inputLocationCoord.value = viewModel.outputFoundCities.value[indexPath.row].coord
                 self.navigationController?.popToViewController(hereView, animated: true)
             }
         }

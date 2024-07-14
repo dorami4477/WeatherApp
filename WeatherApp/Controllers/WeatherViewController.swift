@@ -127,12 +127,12 @@ final class WeatherViewController: BaseViewController {
         tableView.backgroundColor = .clear
     }
     
-    @objc func mapButtonTapped(){
+    @objc private func mapButtonTapped(){
         let vc = MapViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func searchButtonTapped(){
+    @objc private func searchButtonTapped(){
         let vc = CitySearchViewController()
         navigationController?.pushViewController(vc, animated: true)
     }

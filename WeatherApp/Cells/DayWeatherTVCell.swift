@@ -9,10 +9,10 @@ import UIKit
 import Kingfisher
 
 final class DayWeatherTVCell: BaseTableViewCell {
-    let dayLabel = UILabel()
-    let iconImageView = UIImageView()
-    let minTempLabel = UILabel()
-    let maxTempLabel = UILabel()
+    private let dayLabel = UILabel()
+    private let iconImageView = UIImageView()
+    private let minTempLabel = UILabel()
+    private let maxTempLabel = UILabel()
 
 
     override func configureHierarchy(){

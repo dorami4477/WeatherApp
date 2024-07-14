@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherInfoTVCell: BaseTableViewCell {
+final class WeatherInfoTVCell: BaseTableViewCell {
 
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CVlayout())
 

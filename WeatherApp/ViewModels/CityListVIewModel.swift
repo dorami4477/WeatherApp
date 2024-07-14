@@ -25,7 +25,7 @@ final class CityListVIewModel{
         }
     }
     
-    func searchCity(){
+    private func searchCity(){
         guard let searchTerm = inputSearchTerm.value else { return }
         if !searchTerm.trimmingCharacters(in: .whitespaces).isEmpty{
            let searchResults = outputCityList.filter{ $0.name.lowercased().contains(searchTerm.lowercased()) }

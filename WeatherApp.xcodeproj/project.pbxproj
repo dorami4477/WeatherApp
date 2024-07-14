@@ -180,9 +180,9 @@
 				48EC81872C3ED38A00A1F68F /* DayWeatherTVCell.swift */,
 				48EC81A92C40D0A700A1F68F /* CityListTVCell.swift */,
 				48EC81AD2C41781200A1F68F /* LocationTVCell.swift */,
-				48EC81AF2C41785200A1F68F /* BaseTableViewCell.swift */,
 				48EC81B12C422CA000A1F68F /* WeatherInfoTVCell.swift */,
 				48EC81B32C422D5E00A1F68F /* WeatherInfoCVCell.swift */,
+				48EC81AF2C41785200A1F68F /* BaseTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

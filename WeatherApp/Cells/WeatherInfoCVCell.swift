@@ -7,10 +7,10 @@
 
 import UIKit
 
-class WeatherInfoCVCell: UICollectionViewCell {
-    let titleLabel = UILabel()
-    let resultLabel = UILabel()
-    let detailLebel = UILabel()
+final class WeatherInfoCVCell: UICollectionViewCell {
+    private let titleLabel = UILabel()
+    private let resultLabel = UILabel()
+    private let detailLebel = UILabel()
     
     var data:AdditionalWeatherInfo?{
         didSet{

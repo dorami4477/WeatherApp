@@ -9,9 +9,9 @@ import UIKit
 import Kingfisher
 
 final class HourWeatherCVCell: UICollectionViewCell {
-    let timeLabel = UILabel()
-    let iconImageView = UIImageView()
-    let temperatureLebel = UILabel()
+    private let timeLabel = UILabel()
+    private let iconImageView = UIImageView()
+    private let temperatureLebel = UILabel()
     
     
     override init(frame: CGRect) {
