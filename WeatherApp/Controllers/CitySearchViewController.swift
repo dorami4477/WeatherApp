@@ -29,7 +29,6 @@ final class CitySearchViewController: BaseViewController{
     }
     
     private func bindData(){
-        //viewModel.inputViewDidLoadTrigger.value = ()
         viewModel.outputFoundCities.bind { _ in
             self.tableView.reloadData()
         }
