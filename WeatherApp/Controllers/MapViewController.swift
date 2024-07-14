@@ -18,6 +18,7 @@ final class MapViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
+        mapView.delegate = self
     }
     
     override func configureHierarchy() {
@@ -49,7 +50,7 @@ final class MapViewController: BaseViewController {
 
 }
 
-
+// MARK: - CLLocationManagerDelegate
 extension MapViewController:CLLocationManagerDelegate{
     //- 사용자 위치를 성공적으로 가지고 온 경우
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -94,17 +95,37 @@ extension MapViewController:CLLocationManagerDelegate{
         
         switch status {
         case .notDetermined:
-            print(status)
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization() //권한 설정 메시지 띄우기
         case .denied:
-            print(status)
-            print("iOS 설정 창으로 이동하라는 얼럿을 띄워주기")
+            configureMap(lat: 37.517412, lon: 126.889131, title: "문래역", subtitle: nil)
         case .authorizedWhenInUse:
-            print(status)
             locationManager.startUpdatingLocation()
         default:
-            print(status)
+            print(#function, status.rawValue)
         }
+    }
+}
+
+extension MapViewController:MKMapViewDelegate{
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let alert = UIAlertController(title: "날씨 알아보기", message: "해당 위치의 날씨를 알아보시겠습니까?", preferredStyle: .alert)
+        
+        let confirm = UIAlertAction(title: "확인", style: .default){ _ in
+            guard let viewControllerStack = self.navigationController?.viewControllers else { return }
+            for viewController in viewControllerStack {
+                if let hereView = viewController as? WeatherViewController {
+                    guard let annotation = view.annotation else { return }
+                    hereView.viewModel.inputLocationCoord.value = Coord(lon: annotation.coordinate.longitude, lat: annotation.coordinate.latitude)
+                    self.navigationController?.popToViewController(hereView, animated: true)
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true)
     }
 }

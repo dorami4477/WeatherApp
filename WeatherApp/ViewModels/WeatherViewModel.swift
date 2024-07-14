@@ -8,7 +8,8 @@
 import Foundation
 
 final class WeatherViewModel{
-    var inputCityID = Observable(1835847)
+    //var inputCityID = Observable(1835847)
+    var inputLocationCoord:Observable<Coord> = Observable(Coord(lon: 127.049696, lat: 37.654165))
     
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
     var outputEvery3HoursWeather:Observable<[List]> = Observable([])
@@ -17,9 +18,10 @@ final class WeatherViewModel{
     
     
     init(){
-        inputCityID.bind { value in
-            self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
-            self.fetchCurrentWeather(api: NetworkAPI.every3hours(id: self.inputCityID.value), model: Every3HoursFor5Days.self)
+        inputLocationCoord.bind { value in
+            //self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
+            self.fetchCurrentWeather(api:NetworkAPI.current(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model:CurrentWithCity.self)
+            self.fetchCurrentWeather(api: NetworkAPI.every3hours(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model: Every3HoursFor5Days.self)
         }
     }
 
