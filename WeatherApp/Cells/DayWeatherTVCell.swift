@@ -47,7 +47,6 @@ final class DayWeatherTVCell: BaseTableViewCell {
         dayLabel.font = .systemFont(ofSize: 20)
         minTempLabel.font = .systemFont(ofSize: 20)
         maxTempLabel.font = .systemFont(ofSize: 20)
-        
         minTempLabel.textColor = .lightGray
         
     }

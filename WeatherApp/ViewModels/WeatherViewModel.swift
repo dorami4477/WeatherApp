@@ -27,7 +27,7 @@ final class WeatherViewModel{
             self.fetchCurrentWeather(api: NetworkAPI.every3hours(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model: Every3HoursFor5Days.self)
         }
         inputScrollY.bind { value in
-            print(value)
+            print("offsetY", value) // - 78 왜?
             self.scrollAction(Y: value)
         }
     }
@@ -90,9 +90,9 @@ final class WeatherViewModel{
     
     
     func scrollAction(Y:Double){
-        outputTopSpacing.value = abs(Y) + 42
-        outputlowerThanTop.value = Y - 42  < 0
-        outputStopExpandHeaderHeight.value = Y - 42 > -Metric.startTableView
+        outputTopSpacing.value = abs(Y) + 22
+        outputlowerThanTop.value = Y - 22 < 0
+        outputStopExpandHeaderHeight.value = Y - 22 > -Metric.tableInsetTop
     }
   
 }

@@ -10,8 +10,6 @@ import SnapKit
 
 final class WeatherViewController: BaseViewController {
     
-    private var headerHeightConstraint: Constraint? = nil
-    
     private let headerView = UIView()
     private let cityNameLabel = UILabel()
     private let temperatureLabel = UILabel()
@@ -20,7 +18,8 @@ final class WeatherViewController: BaseViewController {
     private let tableView = UITableView()
 
     let viewModel = WeatherViewModel()
-
+    private var headerHeightConstraint: Constraint? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
@@ -56,11 +55,11 @@ final class WeatherViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         minMaxTemLabel.snp.makeConstraints { make in
-            make.top.equalTo(stateLabel.snp.bottom)
+            make.top.equalTo(stateLabel.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(120)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Metric.startTableView)
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
@@ -255,12 +254,12 @@ extension WeatherViewController{
         guard let constraint = headerHeightConstraint else { return }
 
         if viewModel.outputStopExpandHeaderHeight.value, viewModel.outputlowerThanTop.value{
-            //headeView가 지정한 크기만큼 커졌고, 스크롤뷰의 시작점이 최상단보다 아래 존재
-            tableView.contentInset = .init(top: viewModel.outputTopSpacing.value - 20, left: 0, bottom: 0, right: 0)
+            //headeView가 지정한 크기만큼 커졌고, 스크롤뷰의 시작점이 최상단보다 아래 존재 //시작
+            tableView.contentInset = .init(top: viewModel.outputTopSpacing.value, left: 0, bottom: 0, right: 0)
             constraint.update(offset: viewModel.outputTopSpacing.value + Metric.tableInsetTop)
             minMaxTemLabel.alpha = viewModel.outputTopSpacing.value / Metric.startTableView
             if (viewModel.outputTopSpacing.value / Metric.startTableView) > 0.5 {
-                temperatureLabel.font = .systemFont(ofSize: viewModel.outputTopSpacing.value / Metric.startTableView * 100, weight: .light)
+                temperatureLabel.font = .systemFont(ofSize: viewModel.outputTopSpacing.value / Metric.tableInsetTop * 100, weight: .light)
             }else{
                 temperatureLabel.font = .systemFont(ofSize: 50, weight: .medium)
             }
@@ -272,8 +271,8 @@ extension WeatherViewController{
             temperatureLabel.font = .systemFont(ofSize: 50, weight: .medium)
             minMaxTemLabel.alpha = 0
         } else {
-            //스크롤 뷰의 시작점이 최상단보다 밑에 있고, 스크롤뷰 상단 contentInset이 Metric.headerHeight보다 큰 경우
-            constraint.update(offset: viewModel.outputTopSpacing.value + Metric.tableInsetTop)
+            //스크롤 뷰의 시작점이 최상단보다 밑에 있고, 스크롤뷰 상단 contentInset이 Metric.tableInsetTop보다 큰 경우 
+            constraint.update(offset: viewModel.outputTopSpacing.value + Metric.startTableView)
             temperatureLabel.font = .systemFont(ofSize: 100, weight: .light)
             minMaxTemLabel.alpha = 1
         }
