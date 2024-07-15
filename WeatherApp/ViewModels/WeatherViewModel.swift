@@ -16,6 +16,7 @@ final class WeatherViewModel{
     var outputEvery3HoursWeather:Observable<[List]> = Observable([])
     var outputWeatherByDate:Observable<[WeatherFor5Ddays]> = Observable([])
     var outputAdditionalInfo:Observable<[AdditionalWeatherInfo]> = Observable([])
+    var outputFetchWeatherError:Observable<String?> = Observable(nil)
     
     var outputTopSpacing:Observable<Double> = Observable(0.0)
     var outputlowerThanTop:Observable<Bool> = Observable(false)
@@ -53,6 +54,7 @@ final class WeatherViewModel{
                 case .otherErrors:
                     print("error:그 외 에러")
                 }
+                self.outputFetchWeatherError.value = "네트워크의 오류가 있습니다! 잠시 후 다시 시도해주세요."
             }
         }
     }

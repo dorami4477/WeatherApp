@@ -59,6 +59,9 @@ final class CitySearchViewController: BaseViewController{
 
     @objc private func menuButtonTapped(){}
 }
+
+
+// MARK: - UITableViewDelegate
 extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.outputFoundCities.value.count
@@ -81,6 +84,8 @@ extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
     }
 }
 
+
+// MARK: - UISearchResultsUpdating
 extension CitySearchViewController:UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.inputSearchTerm.value = searchController.searchBar.text

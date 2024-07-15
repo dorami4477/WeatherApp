@@ -119,6 +119,10 @@ final class WeatherViewController: BaseViewController {
         viewModel.outputWeatherByDate.bind{ _ in
             self.tableView.reloadData()
         }
+        viewModel.outputFetchWeatherError.bind { value in
+            guard let value else { return }
+            self.showToast(message: value)
+        }
     }
 
     private func configureTableView(){
@@ -271,7 +275,7 @@ extension WeatherViewController{
             temperatureLabel.font = .systemFont(ofSize: 50, weight: .medium)
             minMaxTemLabel.alpha = 0
         } else {
-            //스크롤 뷰의 시작점이 최상단보다 밑에 있고, 스크롤뷰 상단 contentInset이 Metric.tableInsetTop보다 큰 경우 
+            //스크롤 뷰의 시작점이 최상단보다 밑에 있고, 스크롤뷰 상단 contentInset이 Metric.tableInsetTop보다 큰 경우
             constraint.update(offset: viewModel.outputTopSpacing.value + Metric.startTableView)
             temperatureLabel.font = .systemFont(ofSize: 100, weight: .light)
             minMaxTemLabel.alpha = 1

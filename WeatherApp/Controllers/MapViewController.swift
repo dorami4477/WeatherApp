@@ -107,6 +107,7 @@ extension MapViewController:CLLocationManagerDelegate{
     }
 }
 
+// MARK: - MKMapViewDelegate
 extension MapViewController:MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let alert = UIAlertController(title: "날씨 알아보기", message: "해당 위치의 날씨를 알아보시겠습니까?", preferredStyle: .alert)
