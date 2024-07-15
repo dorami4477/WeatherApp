@@ -10,11 +10,7 @@ import SnapKit
 
 final class WeatherViewController: BaseViewController {
     
-    private enum Metric {
-      static let headerHeight = 100.0
-    }
-    
-    private var headerHeightConstraint: NSLayoutConstraint?
+    private var headerHeightConstraint: Constraint? = nil
     
     private let headerView = UIView()
     private let cityNameLabel = UILabel()
@@ -43,10 +39,9 @@ final class WeatherViewController: BaseViewController {
         view.addSubview(tableView)
     }
     override func configureLayout() {
-        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: Metric.headerHeight + 150)
-        
         headerView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            headerHeightConstraint =  make.height.equalTo(Metric.startTableView + Metric.tableInsetTop).constraint
         }
         cityNameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -61,14 +56,13 @@ final class WeatherViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
         minMaxTemLabel.snp.makeConstraints { make in
-            make.top.equalTo(stateLabel.snp.bottom).offset(5)
+            make.top.equalTo(stateLabel.snp.bottom)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(150)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(120)
             make.horizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview().inset(10)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         
     }
@@ -137,7 +131,7 @@ final class WeatherViewController: BaseViewController {
         tableView.register(WeatherInfoTVCell.self, forCellReuseIdentifier: WeatherInfoTVCell.identifier)
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
-        tableView.contentInset = .init(top: Metric.headerHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = .init(top: Metric.tableInsetTop, left: 0, bottom: 0, right: 0)
     }
     
     @objc private func mapButtonTapped(){
@@ -256,32 +250,30 @@ extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSo
 // MARK: - ScrollViewDidScroll
 extension WeatherViewController{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.automaticallyAdjustsScrollIndicatorInsets = false
+        viewModel.inputScrollY.value = scrollView.contentOffset.y
         guard let constraint = headerHeightConstraint else { return }
-        
-        let remainingTopSpacing = abs(scrollView.contentOffset.y)
-        let lowerThanTop = scrollView.contentOffset.y < 0
-        let stopExpandHeaderHeight = scrollView.contentOffset.y > -Metric.headerHeight
-        
-        if stopExpandHeaderHeight, lowerThanTop {
+
+        if viewModel.outputStopExpandHeaderHeight.value, viewModel.outputlowerThanTop.value{
             //headeView가 지정한 크기만큼 커졌고, 스크롤뷰의 시작점이 최상단보다 아래 존재
-            tableView.contentInset = .init(top: remainingTopSpacing, left: 0, bottom: 0, right: 0)
-            constraint.constant = remainingTopSpacing
-            minMaxTemLabel.alpha = remainingTopSpacing / Metric.headerHeight
-            if (remainingTopSpacing / Metric.headerHeight) > 0.5{
-                temperatureLabel.font = .systemFont(ofSize: remainingTopSpacing / Metric.headerHeight * 100, weight: .light)
+            tableView.contentInset = .init(top: viewModel.outputTopSpacing.value - 20, left: 0, bottom: 0, right: 0)
+            constraint.update(offset: viewModel.outputTopSpacing.value + Metric.tableInsetTop)
+            minMaxTemLabel.alpha = viewModel.outputTopSpacing.value / Metric.startTableView
+            if (viewModel.outputTopSpacing.value / Metric.startTableView) > 0.5 {
+                temperatureLabel.font = .systemFont(ofSize: viewModel.outputTopSpacing.value / Metric.startTableView * 100, weight: .light)
             }else{
                 temperatureLabel.font = .systemFont(ofSize: 50, weight: .medium)
             }
             view.layoutIfNeeded()
-        } else if !lowerThanTop {
-            // 2) 스크롤 뷰의 시작점이 최상단보다 위에 존재
+        } else if !viewModel.outputlowerThanTop.value {
+            //스크롤 뷰의 시작점이 최상단보다 위에 존재
             tableView.contentInset = .zero
-            constraint.constant = 0
+            constraint.update(offset:Metric.startTableView)
             temperatureLabel.font = .systemFont(ofSize: 50, weight: .medium)
             minMaxTemLabel.alpha = 0
         } else {
-            // 3) 스크롤 뷰의 시작점이 최상단보다 밑에 있고, 스크롤뷰 상단 contentInset이 미리 지정한 Metric.headerHeight보다 큰 경우
-            constraint.constant = remainingTopSpacing
+            //스크롤 뷰의 시작점이 최상단보다 밑에 있고, 스크롤뷰 상단 contentInset이 Metric.headerHeight보다 큰 경우
+            constraint.update(offset: viewModel.outputTopSpacing.value + Metric.tableInsetTop)
             temperatureLabel.font = .systemFont(ofSize: 100, weight: .light)
             minMaxTemLabel.alpha = 1
         }

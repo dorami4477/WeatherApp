@@ -52,9 +52,8 @@ final class HourWeatherCVCell: UICollectionViewCell {
     }
     
     func configureData(_ data:List){
-        let timeText = DateFormatterManager.shared.stringConvertToDateTime(date:data.dtTxt, newFormat: "HH") + "시"
-        timeLabel.text = timeText
-        temperatureLebel.text = String(format: "%.1f", data.main.temp - 273.15) + "°"
+        timeLabel.text = data.timeString
+        temperatureLebel.text = data.main.tempString
         guard let icon = data.weather.first?.icon else { return }
         let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
         iconImageView.kf.setImage(with: url)

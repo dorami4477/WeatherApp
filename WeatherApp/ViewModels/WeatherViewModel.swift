@@ -10,18 +10,25 @@ import Foundation
 final class WeatherViewModel{
     //var inputCityID = Observable(1835847)
     var inputLocationCoord:Observable<Coord> = Observable(Coord(lon: 127.049696, lat: 37.654165))
-    
+    var inputScrollY:Observable<Double> = Observable(0.0)
+   
     var outputCurrentWeather:Observable<CurrentWithCity?> = Observable(nil)
     var outputEvery3HoursWeather:Observable<[List]> = Observable([])
     var outputWeatherByDate:Observable<[WeatherFor5Ddays]> = Observable([])
     var outputAdditionalInfo:Observable<[AdditionalWeatherInfo]> = Observable([])
     
+    var outputTopSpacing:Observable<Double> = Observable(0.0)
+    var outputlowerThanTop:Observable<Bool> = Observable(false)
+    var outputStopExpandHeaderHeight:Observable<Bool> = Observable(false)
     
     init(){
         inputLocationCoord.bind { value in
-            //self.fetchCurrentWeather(api:NetworkAPI.current(id: self.inputCityID.value), model:CurrentWithCity.self)
             self.fetchCurrentWeather(api:NetworkAPI.current(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model:CurrentWithCity.self)
             self.fetchCurrentWeather(api: NetworkAPI.every3hours(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model: Every3HoursFor5Days.self)
+        }
+        inputScrollY.bind { value in
+            print(value)
+            self.scrollAction(Y: value)
         }
     }
 
@@ -71,7 +78,19 @@ final class WeatherViewModel{
         ]
         outputAdditionalInfo.value = weatherInfo
     }
+    
+    
+    func scrollAction(Y:Double){
+        outputTopSpacing.value = abs(Y) + 42
+        outputlowerThanTop.value = Y - 42  < 0
+        outputStopExpandHeaderHeight.value = Y - 42 > -Metric.startTableView
+    }
   
+    private enum Metric {
+        static let startTableView = 120.0
+        static let tableInsetTop = 100.0
+    }
+
 }
 
 
