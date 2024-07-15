@@ -43,7 +43,16 @@ final class WeatherViewModel{
 
                 }
             case .failure(let failure):
-                print(failure)
+                switch failure{
+                case .invalidRequest:
+                    print("error:요청 변수 확인")
+                case .overRequest:
+                    print("error:호출 한도 초과 오류")
+                case .serverError:
+                    print("error:서버 오류")
+                case .otherErrors:
+                    print("error:그 외 에러")
+                }
             }
         }
     }
@@ -86,11 +95,6 @@ final class WeatherViewModel{
         outputStopExpandHeaderHeight.value = Y - 42 > -Metric.startTableView
     }
   
-    private enum Metric {
-        static let startTableView = 120.0
-        static let tableInsetTop = 100.0
-    }
-
 }
 
 

@@ -10,10 +10,9 @@ import Alamofire
 
 enum ErrorCode:Error{
     case invalidRequest
-    case invalidAuth
-    case invalidURL
     case overRequest
     case serverError
+    case otherErrors
 }
 
 final class NetworkManager{
@@ -25,15 +24,24 @@ final class NetworkManager{
                    method: api.method,
                    parameters: api.parameter,
                    encoding: URLEncoding(destination: .queryString))
-        .validate(statusCode: 200..<500)
+        .validate(statusCode: 200..<505)
         .responseDecodable(of: model) { response in
             switch response.result{
             case .success(let value):
                 completionHandler(.success(value))
                 
-            case .failure(let error):
-                print(error)
-                completionHandler(.failure(.invalidRequest))
+            case .failure:
+                let statusCode = response.response?.statusCode
+                switch statusCode {
+                case 401, 404:
+                    completionHandler(.failure(.invalidRequest))
+                case 429:
+                    completionHandler(.failure(.overRequest))
+                case 500, 502, 503, 504:
+                    completionHandler(.failure(.serverError))
+                default:
+                    completionHandler(.failure(.otherErrors))
+                }
             }
         }
     }
