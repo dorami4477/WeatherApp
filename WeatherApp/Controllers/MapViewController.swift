@@ -21,6 +21,10 @@ final class MapViewController: BaseViewController {
         mapView.delegate = self
     }
     
+    deinit {
+        print(self, "deinit")
+    }
+    
     override func configureHierarchy() {
         mapView = MKMapView(frame: view.bounds)
         view.addSubview(mapView)

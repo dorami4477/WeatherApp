@@ -14,15 +14,20 @@ final class CityListVIewModel{
     var outputFoundCities:Observable<[CityList]> = Observable([])
     
     init(){
-        inputViewDidLoadTrigger.bind { _ in
+        inputViewDidLoadTrigger.bind { [weak self] _ in
+            guard let self else { return }
             NetworkManager.shared.fetchCityList {
                 self.outputCityList = $0
                 self.outputFoundCities.value = self.outputCityList
             }
         }
-        inputSearchTerm.bind { value in
-            self.searchCity()
+        inputSearchTerm.bind { [weak self] value in
+            self?.searchCity()
         }
+    }
+    
+    deinit{
+        print(self, "deinit")
     }
     
     private func searchCity(){

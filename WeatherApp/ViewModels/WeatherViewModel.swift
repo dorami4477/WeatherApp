@@ -23,25 +23,31 @@ final class WeatherViewModel{
     var outputStopExpandHeaderHeight:Observable<Bool> = Observable(false)
     
     init(){
-        inputLocationCoord.bind { value in
+        inputLocationCoord.bind { [weak self] value in
+            guard let self else { return }
             self.fetchCurrentWeather(api:NetworkAPI.current(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model:CurrentWithCity.self)
             self.fetchCurrentWeather(api: NetworkAPI.every3hours(lat: self.inputLocationCoord.value.lat, lon: self.inputLocationCoord.value.lon), model: Every3HoursFor5Days.self)
         }
-        inputScrollY.bind { value in
-            print("offsetY", value) // - 78 왜?
+        inputScrollY.bind { [weak self] value in
+            guard let self else { return }
+            print("contentOffset.y:", value) //scrollY - 78
             self.scrollAction(Y: value)
         }
     }
+    
+    deinit{
+        print(self, "deinit")
+    }
 
     private func fetchCurrentWeather<T:Decodable>(api:NetworkAPI, model:T.Type){
-        NetworkManager.shared.callRequest(api: api, model: model) { results in
+        NetworkManager.shared.callRequest(api: api, model: model) { [weak self] results in
+            guard let self else { return }
             switch results {
             case .success(let value):
                 if let currentWeather = value as? CurrentWithCity{
                     self.outputCurrentWeather.value = currentWeather
                 }else if let every3hours = value as? Every3HoursFor5Days{
                     self.outputEvery3HoursWeather.value = every3hours.list
-
                 }
             case .failure(let failure):
                 switch failure{

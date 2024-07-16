@@ -27,6 +27,9 @@ final class WeatherViewController: BaseViewController {
         bindData()
     }
     
+    deinit {
+        print(self, "deinit")
+    }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.isToolbarHidden = false
@@ -96,7 +99,8 @@ final class WeatherViewController: BaseViewController {
     }
     
     private func bindData(){
-        viewModel.outputCurrentWeather.bind { value in
+        viewModel.outputCurrentWeather.bind { [weak self] value in
+            guard let self else { return }
             guard let value else { return }
             self.cityNameLabel.text = value.name
             self.temperatureLabel.text = value.main.tempString
@@ -106,20 +110,24 @@ final class WeatherViewController: BaseViewController {
             self.tableView.reloadData()
             self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         }
-        viewModel.outputAdditionalInfo.bind{ _ in
+        viewModel.outputAdditionalInfo.bind{ [weak self] _ in
+            guard let self else { return }
             guard let currentCell = self.tableView.cellForRow(at: [3,0]) as? WeatherInfoTVCell else { return }
             currentCell.collectionView.reloadData()
         }
         
-        viewModel.outputEvery3HoursWeather.bind { _ in
+        viewModel.outputEvery3HoursWeather.bind { [weak self] _ in
+            guard let self else { return }
             guard let currentCell = self.tableView.cellForRow(at: [0,0]) as? HourWeatherTVCell else { return }
             self.viewModel.findMinMaxTemp()
             currentCell.collectionView.reloadData()
         }
-        viewModel.outputWeatherByDate.bind{ _ in
+        viewModel.outputWeatherByDate.bind{ [weak self] _ in
+            guard let self else { return }
             self.tableView.reloadData()
         }
-        viewModel.outputFetchWeatherError.bind { value in
+        viewModel.outputFetchWeatherError.bind { [weak self] value in
+            guard let self else { return }
             guard let value else { return }
             self.showToast(message: value)
         }
@@ -247,7 +255,6 @@ extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSo
         }
 
     }
-    
 }
 
 // MARK: - ScrollViewDidScroll
@@ -255,10 +262,12 @@ extension WeatherViewController{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
         viewModel.inputScrollY.value = scrollView.contentOffset.y
+        print(scrollView.contentOffset.y)
+        
         guard let constraint = headerHeightConstraint else { return }
-
+        
         if viewModel.outputStopExpandHeaderHeight.value, viewModel.outputlowerThanTop.value{
-            //headeView가 지정한 크기만큼 커졌고, 스크롤뷰의 시작점이 최상단보다 아래 존재 //시작
+            //headeView가 지정한 크기만큼 커졌고, 스크롤뷰의 시작점이 최상단보다 아래 존재
             tableView.contentInset = .init(top: viewModel.outputTopSpacing.value, left: 0, bottom: 0, right: 0)
             constraint.update(offset: viewModel.outputTopSpacing.value + Metric.tableInsetTop)
             minMaxTemLabel.alpha = viewModel.outputTopSpacing.value / Metric.startTableView

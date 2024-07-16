@@ -19,6 +19,10 @@ final class CitySearchViewController: BaseViewController{
         bindData()
     }
     
+    deinit {
+        print(self, "deinit")
+    }
+    
     override func configureHierarchy() {
         view.addSubview(tableView)
     }
@@ -29,8 +33,8 @@ final class CitySearchViewController: BaseViewController{
     }
     
     private func bindData(){
-        viewModel.outputFoundCities.bind { _ in
-            self.tableView.reloadData()
+        viewModel.outputFoundCities.bind { [weak self] _ in
+            self?.tableView.reloadData()
         }
     }
     
