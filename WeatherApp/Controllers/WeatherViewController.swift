@@ -108,7 +108,8 @@ final class WeatherViewController: BaseViewController {
             self.minMaxTemLabel.text = value.main.tempMaxString + " | " + value.main.tempMinString
             self.viewModel.getAdditionalWeatherInfo()
             self.tableView.reloadData()
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            //self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            self.tableView.setContentOffset( CGPoint(x: 0, y: -100) , animated: true)
         }
         viewModel.outputAdditionalInfo.bind{ [weak self] _ in
             guard let self else { return }
@@ -143,6 +144,7 @@ final class WeatherViewController: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInset = .init(top: Metric.tableInsetTop, left: 0, bottom: 0, right: 0)
+        tableView.separatorStyle = .none
     }
     
     @objc private func mapButtonTapped(){
@@ -173,14 +175,14 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         }
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var headerView : UIView?
-        headerView = UIView(frame: CGRect(x:0, y:0, width:tableView.frame.size.width, height:40))
+        var headerView = UITableViewHeaderFooterView()
+        let backView = UIView(frame: CGRect(x:0, y:0, width:tableView.frame.size.width, height:40))
         
-        let title = UILabel(frame: CGRect(x:45, y:-5, width:tableView.frame.size.width - 45, height:30))
+        let title = UILabel(frame: CGRect(x:45, y:0, width:tableView.frame.size.width - 45, height:30))
         title.font = UIFont.systemFont(ofSize: 16)
         title.textColor = UIColor.lightGray
         
-        let icon = UIImageView(frame: CGRect(x:15, y:0, width:25, height:20))
+        let icon = UIImageView(frame: CGRect(x:15, y:5, width:25, height:20))
         icon.tintColor = .lightGray
         icon.contentMode = .scaleAspectFit
         
@@ -194,14 +196,19 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         case 2:
             title.text = "위치"
             icon.image = UIImage(systemName: "location")
+        case 3:
+            title.text = "추가 정보"
+            icon.image = UIImage(systemName: "info.circle")
         default:
             title.text = ""
         }
-        headerView?.addSubview(icon)
-        headerView?.addSubview(title)
-       
+        headerView.addSubview(backView)
+        headerView.addSubview(icon)
+        headerView.addSubview(title)
         return headerView
     }
+    
+
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4

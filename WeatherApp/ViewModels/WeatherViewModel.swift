@@ -98,9 +98,13 @@ final class WeatherViewModel{
     
     
     func scrollAction(Y:Double){
-        outputTopSpacing.value = abs(Y) + 22
-        outputlowerThanTop.value = Y - 22 < 0
-        outputStopExpandHeaderHeight.value = Y - 22 > -Metric.tableInsetTop
+        //outputTopSpacing.value = abs(Y) + 22
+        //outputlowerThanTop.value = Y - 22 < 0
+        //outputStopExpandHeaderHeight.value = Y - 22 > -Metric.tableInsetTop
+        outputTopSpacing.value = abs(Y)
+        outputlowerThanTop.value = Y < 0
+        outputStopExpandHeaderHeight.value = Y > -Metric.tableInsetTop
+
     }
   
 }

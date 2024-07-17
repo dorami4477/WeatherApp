@@ -8,6 +8,6 @@
 import Foundation
 
 enum Metric {
-    static let startTableView = 120.0
+    static let startTableView = 130.0
     static let tableInsetTop = 100.0
 }
