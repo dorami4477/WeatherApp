@@ -86,6 +86,7 @@ final class WeatherViewController: BaseViewController {
         let appearance = UIToolbarAppearance()
 
         navigationController?.toolbar.scrollEdgeAppearance = appearance
+        navigationController?.toolbar.backgroundColor = .clear
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let mapButton = UIBarButtonItem(image: UIImage(systemName: "map"), style: .plain, target: self, action: #selector(mapButtonTapped))
@@ -95,7 +96,6 @@ final class WeatherViewController: BaseViewController {
         searchButton.tintColor = .white
         let barItems = [mapButton, flexibleSpace, searchButton]
         self.toolbarItems = barItems
-    
     }
     
     private func bindData(){
@@ -172,19 +172,37 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             return UITableView.automaticDimension
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var headerView : UIView?
+        headerView = UIView(frame: CGRect(x:0, y:0, width:tableView.frame.size.width, height:40))
+        
+        let title = UILabel(frame: CGRect(x:45, y:-5, width:tableView.frame.size.width - 45, height:30))
+        title.font = UIFont.systemFont(ofSize: 16)
+        title.textColor = UIColor.lightGray
+        
+        let icon = UIImageView(frame: CGRect(x:15, y:0, width:25, height:20))
+        icon.tintColor = .lightGray
+        icon.contentMode = .scaleAspectFit
+        
         switch section{
         case 0:
-            return "3시간 간격의 일기예보"
+            title.text = "3시간 간격의 일기예보"
+            icon.image = UIImage(systemName: "calendar")
         case 1:
-            return "5일간의 일기예보"
+            title.text = "5일간의 일기예보"
+            icon.image = UIImage(systemName: "calendar")
         case 2:
-            return "위치"
+            title.text = "위치"
+            icon.image = UIImage(systemName: "location")
         default:
-            return ""
+            title.text = ""
         }
+        headerView?.addSubview(icon)
+        headerView?.addSubview(title)
+       
+        return headerView
     }
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
