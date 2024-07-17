@@ -84,10 +84,9 @@ final class WeatherViewController: BaseViewController {
     private func configureNavigation(){
         navigationController?.isToolbarHidden = false
         let appearance = UIToolbarAppearance()
-
+        appearance.configureWithTransparentBackground()
         navigationController?.toolbar.scrollEdgeAppearance = appearance
-        navigationController?.toolbar.backgroundColor = .clear
-        
+
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let mapButton = UIBarButtonItem(image: UIImage(systemName: "map"), style: .plain, target: self, action: #selector(mapButtonTapped))
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(searchButtonTapped))
@@ -108,8 +107,7 @@ final class WeatherViewController: BaseViewController {
             self.minMaxTemLabel.text = value.main.tempMaxString + " | " + value.main.tempMinString
             self.viewModel.getAdditionalWeatherInfo()
             self.tableView.reloadData()
-            //self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-            self.tableView.setContentOffset( CGPoint(x: 0, y: -100) , animated: true)
+            self.tableView.setContentOffset( CGPoint(x: 0, y: -Metric.tableInsetTop) , animated: true)
         }
         viewModel.outputAdditionalInfo.bind{ [weak self] _ in
             guard let self else { return }
