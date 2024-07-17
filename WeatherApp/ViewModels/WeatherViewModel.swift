@@ -30,7 +30,6 @@ final class WeatherViewModel{
         }
         inputScrollY.bind { [weak self] value in
             guard let self else { return }
-            print("contentOffset.y:", value) //scrollY - 78
             self.scrollAction(Y: value)
         }
     }

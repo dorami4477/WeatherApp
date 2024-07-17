@@ -33,6 +33,8 @@ final class WeatherViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.isToolbarHidden = false
+        self.tableView.contentInset = .init(top: Metric.tableInsetTop, left: 0, bottom: 0, right: 0)
+        self.tableView.setContentOffset(CGPoint(x: 0, y: -Metric.tableInsetTop), animated: true)
     }
     
     override func configureHierarchy() {
@@ -106,8 +108,8 @@ final class WeatherViewController: BaseViewController {
             self.stateLabel.text = value.weather.first?.description.capitalized
             self.minMaxTemLabel.text = value.main.tempMaxString + " | " + value.main.tempMinString
             self.viewModel.getAdditionalWeatherInfo()
+
             self.tableView.reloadData()
-            self.tableView.setContentOffset( CGPoint(x: 0, y: -Metric.tableInsetTop) , animated: true)
         }
         viewModel.outputAdditionalInfo.bind{ [weak self] _ in
             guard let self else { return }
@@ -285,7 +287,6 @@ extension WeatherViewController{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
         viewModel.inputScrollY.value = scrollView.contentOffset.y
-        print(scrollView.contentOffset.y)
         
         guard let constraint = headerHeightConstraint else { return }
         
