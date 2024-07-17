@@ -125,8 +125,6 @@
 				48EC81682C3E5ED600A1F68F /* ViewModels */,
 				48EC81662C3E5EC200A1F68F /* Models */,
 				48EC815A2C3E5DA200A1F68F /* Controllers */,
-				48EC81512C3E5BA300A1F68F /* LaunchScreen.storyboard */,
-				48EC81542C3E5BA300A1F68F /* Info.plist */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -201,9 +199,11 @@
 		48EC81A12C40C3C900A1F68F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				48EC81542C3E5BA300A1F68F /* Info.plist */,
 				48EC81692C3E603B00A1F68F /* APIKey.swift */,
 				48EC814F2C3E5BA300A1F68F /* Assets.xcassets */,
 				48EC81A62C40C7BA00A1F68F /* CityList.json */,
+				48EC81512C3E5BA300A1F68F /* LaunchScreen.storyboard */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -482,7 +482,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U4HJYQP2ZD;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_FILE = WeatherApp/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -514,7 +514,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U4HJYQP2ZD;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_FILE = WeatherApp/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
