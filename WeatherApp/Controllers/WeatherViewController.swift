@@ -30,6 +30,7 @@ final class WeatherViewController: BaseViewController {
     deinit {
         print(self, "deinit")
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.isToolbarHidden = false
@@ -42,6 +43,7 @@ final class WeatherViewController: BaseViewController {
         view.addSubview(headerView)
         view.addSubview(tableView)
     }
+    
     override func configureLayout() {
         headerView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
@@ -68,8 +70,8 @@ final class WeatherViewController: BaseViewController {
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
-        
     }
+    
     override func configureUI() {
         cityNameLabel.font = .systemFont(ofSize: 30)
         temperatureLabel.font = .systemFont(ofSize: 100, weight: .light)
@@ -99,7 +101,7 @@ final class WeatherViewController: BaseViewController {
         self.toolbarItems = barItems
     }
     
-    private func bindData(){
+    private func bindData() {
         viewModel.outputCurrentWeather.bind { [weak self] value in
             guard let self else { return }
             guard let value else { return }
@@ -116,7 +118,6 @@ final class WeatherViewController: BaseViewController {
             guard let currentCell = self.tableView.cellForRow(at: [3,0]) as? WeatherInfoTVCell else { return }
             currentCell.collectionView.reloadData()
         }
-        
         viewModel.outputEvery3HoursWeather.bind { [weak self] _ in
             guard let self else { return }
             guard let currentCell = self.tableView.cellForRow(at: [0,0]) as? HourWeatherTVCell else { return }
@@ -134,7 +135,7 @@ final class WeatherViewController: BaseViewController {
         }
     }
 
-    private func configureTableView(){
+    private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(HourWeatherTVCell.self, forCellReuseIdentifier: HourWeatherTVCell.identifier)
@@ -147,12 +148,12 @@ final class WeatherViewController: BaseViewController {
         tableView.separatorStyle = .none
     }
     
-    @objc private func mapButtonTapped(){
+    @objc private func mapButtonTapped() {
         let vc = MapViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func searchButtonTapped(){
+    @objc private func searchButtonTapped() {
         let vc = CitySearchViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -160,7 +161,7 @@ final class WeatherViewController: BaseViewController {
 }//:class
 
 // MARK: - TableViewDalegate
-extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
+extension WeatherViewController:UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section{
@@ -175,7 +176,7 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         }
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var headerView = UITableViewHeaderFooterView()
+        let headerView = UITableViewHeaderFooterView()
         let backView = UIView(frame: CGRect(x:0, y:0, width:tableView.frame.size.width, height:40))
         
         let title = UILabel(frame: CGRect(x:45, y:0, width:tableView.frame.size.width - 45, height:30))
@@ -186,7 +187,7 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
         icon.tintColor = .lightGray
         icon.contentMode = .scaleAspectFit
         
-        switch section{
+        switch section {
         case 0:
             title.text = "3시간 간격의 일기예보"
             icon.image = UIImage(systemName: "calendar")
@@ -232,17 +233,17 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
             cell.collectionView.register(HourWeatherCVCell.self, forCellWithReuseIdentifier: HourWeatherCVCell.identifier)
             cell.collectionView.tag = 0
             return cell
-        }else if indexPath.section == 1{
+        }else if indexPath.section == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DayWeatherTVCell.identifier, for: indexPath) as? DayWeatherTVCell  else { return UITableViewCell()}
             cell.backgroundColor = UIColor.clear
             cell.configureData(data: viewModel.outputWeatherByDate.value[indexPath.row])
             return cell
-        }else if indexPath.section == 2{
+        }else if indexPath.section == 2 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationTVCell.identifier, for: indexPath) as? LocationTVCell  else { return UITableViewCell()}
             cell.backgroundColor = UIColor.clear
             cell.data = viewModel.outputCurrentWeather.value
             return cell
-        }else if indexPath.section == 3{
+        }else if indexPath.section == 3 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherInfoTVCell.identifier, for: indexPath) as? WeatherInfoTVCell  else { return UITableViewCell()}
             cell.backgroundColor = UIColor.clear
             cell.collectionView.dataSource = self
@@ -257,10 +258,10 @@ extension WeatherViewController:UITableViewDataSource, UITableViewDelegate{
 }
     
 // MARK: - CollectionViewDelegate
-extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSource{
+extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView.tag == 0{
+        if collectionView.tag == 0 {
             return viewModel.outputEvery3HoursWeather.value.count
         }else{
             return viewModel.outputAdditionalInfo.value.count
@@ -268,7 +269,7 @@ extension WeatherViewController:UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView.tag == 0{
+        if collectionView.tag == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourWeatherCVCell.identifier, for: indexPath) as? HourWeatherCVCell else { return UICollectionViewCell()}
             let value = viewModel.outputEvery3HoursWeather.value
             cell.configureData(value[indexPath.row])
@@ -290,7 +291,7 @@ extension WeatherViewController{
         
         guard let constraint = headerHeightConstraint else { return }
         
-        if viewModel.outputStopExpandHeaderHeight.value, viewModel.outputlowerThanTop.value{
+        if viewModel.outputStopExpandHeaderHeight.value, viewModel.outputlowerThanTop.value {
             //headeView가 지정한 크기만큼 커졌고, 스크롤뷰의 시작점이 최상단보다 아래 존재
             tableView.contentInset = .init(top: viewModel.outputTopSpacing.value, left: 0, bottom: 0, right: 0)
             constraint.update(offset: viewModel.outputTopSpacing.value + Metric.tableInsetTop)

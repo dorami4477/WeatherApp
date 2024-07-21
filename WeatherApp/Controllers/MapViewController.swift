@@ -55,7 +55,7 @@ final class MapViewController: BaseViewController {
 }
 
 // MARK: - CLLocationManagerDelegate
-extension MapViewController:CLLocationManagerDelegate{
+extension MapViewController:CLLocationManagerDelegate {
     //- 사용자 위치를 성공적으로 가지고 온 경우
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate{
@@ -88,7 +88,7 @@ extension MapViewController:CLLocationManagerDelegate{
 
     }
     
-    func checkCurrentLocationAuthorization(){
+    func checkCurrentLocationAuthorization() {
         var status:CLAuthorizationStatus
         
         if #available(iOS 14.0, *){
@@ -112,7 +112,7 @@ extension MapViewController:CLLocationManagerDelegate{
 }
 
 // MARK: - MKMapViewDelegate
-extension MapViewController:MKMapViewDelegate{
+extension MapViewController:MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let alert = UIAlertController(title: "날씨 알아보기", message: "해당 위치의 날씨를 알아보시겠습니까?", preferredStyle: .alert)
         

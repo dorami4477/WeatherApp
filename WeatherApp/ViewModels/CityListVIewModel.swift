@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CityListVIewModel{
+final class CityListVIewModel {
     var inputViewDidLoadTrigger:Observable<Void?> = Observable(nil)
     var inputSearchTerm:Observable<String?> = Observable("")
     var outputCityList:[CityList] = []
@@ -30,7 +30,7 @@ final class CityListVIewModel{
         print(self, "deinit")
     }
     
-    private func searchCity(){
+    private func searchCity() {
         guard let searchTerm = inputSearchTerm.value else { return }
         if !searchTerm.trimmingCharacters(in: .whitespaces).isEmpty{
            let searchResults = outputCityList.filter{ $0.name.lowercased().contains(searchTerm.lowercased()) }

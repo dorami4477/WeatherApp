@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct CityList:Decodable{
+struct CityList:Decodable {
     let id: Int
     let name: String
     let state: String
@@ -16,7 +16,7 @@ struct CityList:Decodable{
     let coord: Coord
 }
 
-struct Coord:Decodable{
+struct Coord:Decodable {
     let lon:Double
     let lat:Double
 }

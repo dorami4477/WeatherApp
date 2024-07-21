@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AdditionalWeatherInfo{
+struct AdditionalWeatherInfo {
     let title:String
     let Info:String
     let detail:String?

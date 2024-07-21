@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CurrentWithCity:Decodable{
+struct CurrentWithCity:Decodable {
     let coord: Dictionary<String, Double>
     let weather: [Summary]
     let base: String

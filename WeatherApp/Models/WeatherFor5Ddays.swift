@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherFor5Ddays{
+struct WeatherFor5Ddays {
     var date:String
     let icon:String
     let minTemp:Double

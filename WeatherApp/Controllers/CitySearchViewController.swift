@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CitySearchViewController: BaseViewController{
+final class CitySearchViewController: BaseViewController {
 
     private let tableView = UITableView()
     private let viewModel = CityListVIewModel()
@@ -38,14 +38,14 @@ final class CitySearchViewController: BaseViewController{
         }
     }
     
-    private func configureTableView(){
+    private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CityListTVCell.self, forCellReuseIdentifier: CityListTVCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
     }
     
-    private func configureNavigationItem(){
+    private func configureNavigationItem() {
         let menu = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(menuButtonTapped))
         menu.tintColor = .white
         navigationItem.title = "City"
@@ -66,7 +66,7 @@ final class CitySearchViewController: BaseViewController{
 
 
 // MARK: - UITableViewDelegate
-extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
+extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.outputFoundCities.value.count
     }
@@ -90,7 +90,7 @@ extension CitySearchViewController:UITableViewDelegate, UITableViewDataSource{
 
 
 // MARK: - UISearchResultsUpdating
-extension CitySearchViewController:UISearchResultsUpdating{
+extension CitySearchViewController:UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.inputSearchTerm.value = searchController.searchBar.text
     }
