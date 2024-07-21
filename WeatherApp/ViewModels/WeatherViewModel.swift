@@ -87,10 +87,10 @@ final class WeatherViewModel {
     func getAdditionalWeatherInfo() {
         guard let outputValue = outputCurrentWeather.value else {return}
         let weatherInfo:[AdditionalWeatherInfo] = [
-            AdditionalWeatherInfo(title: "바람 속도", Info: String(format: "%.1f", outputValue.wind.speed) + "m/s", detail: "강풍: " + String(format: "%.1f", outputValue.wind.gust ?? "") + "m/s"),
-            AdditionalWeatherInfo(title: "구름", Info: outputValue.clouds["all"]!.formatted() + "%", detail: nil),
-            AdditionalWeatherInfo(title: "기압", Info: outputValue.main.pressure.formatted()  + "hpa", detail: nil),
-            AdditionalWeatherInfo(title: "습도", Info: outputValue.main.humidity.formatted()  + "%", detail:nil)
+            AdditionalWeatherInfo(title: StringLiteral.WeatherInfo.cloud, Info: String(format: "%.1f", outputValue.wind.speed) + "m/s", detail: "강풍: " + String(format: "%.1f", outputValue.wind.gust ?? "") + "m/s"),
+            AdditionalWeatherInfo(title: StringLiteral.WeatherInfo.cloud, Info: outputValue.clouds["all"]!.formatted() + "%", detail: nil),
+            AdditionalWeatherInfo(title: StringLiteral.WeatherInfo.pressure, Info: outputValue.main.pressure.formatted()  + "hpa", detail: nil),
+            AdditionalWeatherInfo(title: StringLiteral.WeatherInfo.humid, Info: outputValue.main.humidity.formatted()  + "%", detail:nil)
         ]
         outputAdditionalInfo.value = weatherInfo
     }
