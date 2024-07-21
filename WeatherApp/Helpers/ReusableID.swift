@@ -7,24 +7,24 @@
 
 import UIKit
 
-protocol ReuseIdentifierProtocol{
+protocol ReuseIdentifierProtocol {
     static var identifier:String { get }
 }
 
 
-extension UITableViewCell:ReuseIdentifierProtocol{
-    static var identifier:String{
+extension UITableViewCell:ReuseIdentifierProtocol {
+    static var identifier:String {
         return String(describing: self)
     }
 }
 
-extension UIViewController:ReuseIdentifierProtocol{
+extension UIViewController:ReuseIdentifierProtocol {
     static var identifier:String{
         return String(describing: self)
     }
 }
-extension UICollectionViewCell:ReuseIdentifierProtocol{
-    static var identifier:String{
+extension UICollectionViewCell:ReuseIdentifierProtocol {
+    static var identifier:String {
         return String(describing: self)
     }
 }

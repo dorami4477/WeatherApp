@@ -18,12 +18,13 @@ final class CityListTVCell: BaseTableViewCell {
         }
     }
     
-    override func configureHierarchy(){
+    override func configureHierarchy() {
         addSubview(iconLabel)
         addSubview(nameLabel)
         addSubview(countryLabel)
     }
-    override func configureLayout(){
+    
+    override func configureLayout() {
         iconLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(20)
@@ -38,7 +39,8 @@ final class CityListTVCell: BaseTableViewCell {
             make.bottom.equalToSuperview().inset(10)
         }
     }
-    override func configureView(){
+    
+    override func configureView() {
         iconLabel.text = "#"
         iconLabel.font = .systemFont(ofSize: 20)
         nameLabel.font = .systemFont(ofSize: 20)

@@ -12,7 +12,7 @@ final class WeatherInfoCVCell: UICollectionViewCell {
     private let resultLabel = UILabel()
     private let detailLebel = UILabel()
     
-    var data:AdditionalWeatherInfo?{
+    var data:AdditionalWeatherInfo? {
         didSet{
             guard let data else { return }
             titleLabel.text = data.title
@@ -36,7 +36,7 @@ final class WeatherInfoCVCell: UICollectionViewCell {
         contentView.addSubview(resultLabel)
         contentView.addSubview(detailLebel)
     }
-    private func configureLayout(){
+    private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview().inset(10)
         }
@@ -49,7 +49,8 @@ final class WeatherInfoCVCell: UICollectionViewCell {
             make.bottom.equalToSuperview().inset(10)
         }
     }
-    private func configureUI(){
+    
+    private func configureUI() {
         titleLabel.textColor = .gray
         resultLabel.font = .systemFont(ofSize: 30)
         contentView.backgroundColor = .gray.withAlphaComponent(0.2)

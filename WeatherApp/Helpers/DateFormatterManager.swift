@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class DateFormatterManager{
+final class DateFormatterManager {
     static let shared = DateFormatterManager()
-    private init(){}
+    private init() {}
     
     static let formatter = DateFormatter()
     

@@ -15,7 +15,7 @@ enum ErrorCode:Error{
     case otherErrors
 }
 
-final class NetworkManager{
+final class NetworkManager {
     static let shared = NetworkManager()
     private init(){}
     
@@ -46,7 +46,7 @@ final class NetworkManager{
         }
     }
     
-    func fetchCityList(completionHandler:@escaping ([CityList]) -> Void){
+    func fetchCityList(completionHandler:@escaping ([CityList]) -> Void) {
         guard let path = Bundle.main.path(forResource: "CityList", ofType: "json") else { return }
         guard let jsonString = try? String(contentsOfFile: path) else { return }
      

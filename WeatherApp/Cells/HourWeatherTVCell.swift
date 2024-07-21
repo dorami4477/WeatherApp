@@ -11,7 +11,7 @@ final class HourWeatherTVCell: BaseTableViewCell {
 
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CVlayout())
 
-    private func CVlayout() -> UICollectionViewLayout{
+    private func CVlayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let width = ( UIScreen.main.bounds.width - 50 ) / 5
         layout.itemSize = CGSize(width: width, height: width * 2)

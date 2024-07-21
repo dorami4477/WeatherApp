@@ -24,12 +24,14 @@ final class HourWeatherCVCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func configureHierarchy(){
+    
+    private func configureHierarchy() {
         contentView.addSubview(timeLabel)
         contentView.addSubview(iconImageView)
         contentView.addSubview(temperatureLebel)
     }
-    private func configureLayout(){
+    
+    private func configureLayout() {
         timeLabel.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
         }
@@ -44,7 +46,8 @@ final class HourWeatherCVCell: UICollectionViewCell {
             make.bottom.equalToSuperview()
         }
     }
-    private func configureUI(){
+    
+    private func configureUI() {
         timeLabel.textAlignment = .center
         temperatureLebel.textAlignment = .center
         iconImageView.contentMode = .scaleAspectFit
@@ -58,6 +61,5 @@ final class HourWeatherCVCell: UICollectionViewCell {
         let url = URL(string: "https://openweathermap.org/img/wn/\(icon)@2x.png")
         iconImageView.kf.setImage(with: url)
     }
-    
 
 }

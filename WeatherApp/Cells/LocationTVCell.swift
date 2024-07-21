@@ -12,7 +12,7 @@ final class LocationTVCell: BaseTableViewCell {
     
     private var mapView: MKMapView!
     
-    var data:CurrentWithCity?{
+    var data:CurrentWithCity? {
         didSet{
             guard let data else { return }
             guard let lat = data.coord["lat"], let lon = data.coord["lon"] else { return }
@@ -35,6 +35,7 @@ final class LocationTVCell: BaseTableViewCell {
             make.horizontalEdges.equalToSuperview().inset(20)
         }
     }
+     
     private func configureMap(lat:Double, lon:Double, title:String, weather:String) {
         let center = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))

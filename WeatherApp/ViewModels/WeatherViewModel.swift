@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class WeatherViewModel{
+final class WeatherViewModel {
     //var inputCityID = Observable(1835847)
     var inputLocationCoord:Observable<Coord> = Observable(Coord(lon: 127.049696, lat: 37.654165))
     var inputScrollY:Observable<Double> = Observable(0.0)
@@ -38,7 +38,7 @@ final class WeatherViewModel{
         print(self, "deinit")
     }
 
-    private func fetchCurrentWeather<T:Decodable>(api:NetworkAPI, model:T.Type){
+    private func fetchCurrentWeather<T:Decodable>(api:NetworkAPI, model:T.Type) {
         NetworkManager.shared.callRequest(api: api, model: model) { [weak self] results in
             guard let self else { return }
             switch results {
@@ -65,7 +65,7 @@ final class WeatherViewModel{
     }
     
     
-    func findMinMaxTemp(){
+    func findMinMaxTemp() {
         var weatherData: [WeatherFor5Ddays] = []
 
         for list in outputEvery3HoursWeather.value {
@@ -84,7 +84,7 @@ final class WeatherViewModel{
         outputWeatherByDate.value = weatherData
     }
     
-    func getAdditionalWeatherInfo(){
+    func getAdditionalWeatherInfo() {
         guard let outputValue = outputCurrentWeather.value else {return}
         let weatherInfo:[AdditionalWeatherInfo] = [
             AdditionalWeatherInfo(title: "바람 속도", Info: String(format: "%.1f", outputValue.wind.speed) + "m/s", detail: "강풍: " + String(format: "%.1f", outputValue.wind.gust ?? "") + "m/s"),
@@ -96,10 +96,7 @@ final class WeatherViewModel{
     }
     
     
-    func scrollAction(Y:Double){
-        //outputTopSpacing.value = abs(Y) + 22
-        //outputlowerThanTop.value = Y - 22 < 0
-        //outputStopExpandHeaderHeight.value = Y - 22 > -Metric.tableInsetTop
+    func scrollAction(Y:Double) {
         outputTopSpacing.value = abs(Y)
         outputlowerThanTop.value = Y < 0
         outputStopExpandHeaderHeight.value = Y > -Metric.tableInsetTop

@@ -8,12 +8,12 @@
 import Foundation
 import Alamofire
 
-enum NetworkAPI{
+enum NetworkAPI {
     case current(lat:Double, lon:Double)
     case every3hours(lat:Double, lon:Double)
     case days
     
-    var baseURL:String{
+    var baseURL:String {
         return "https://api.openweathermap.org/"
     }
     
@@ -21,7 +21,7 @@ enum NetworkAPI{
         return .get
     }
     
-    var endPoint:URL{
+    var endPoint:URL {
         switch self {
         case .current:
             return URL(string:baseURL + "data/2.5/weather")!
@@ -32,7 +32,7 @@ enum NetworkAPI{
         }
     }
     
-    var parameter:Parameters{
+    var parameter:Parameters {
         switch self {
         case .current(let lat, let lon):
             return ["appid":APIKey.weather, "lat":lat, "lon":lon]

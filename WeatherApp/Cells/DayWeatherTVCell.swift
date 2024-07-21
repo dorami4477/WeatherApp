@@ -15,14 +15,14 @@ final class DayWeatherTVCell: BaseTableViewCell {
     private let maxTempLabel = UILabel()
 
 
-    override func configureHierarchy(){
+    override func configureHierarchy() {
         addSubview(dayLabel)
         addSubview(iconImageView)
         addSubview(minTempLabel)
         addSubview(maxTempLabel)
     }
     
-    override func configureLayout(){
+    override func configureLayout() {
         dayLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(15)
             make.leading.equalToSuperview().offset(30)
@@ -43,7 +43,7 @@ final class DayWeatherTVCell: BaseTableViewCell {
         }
     }
     
-    override func configureView(){
+    override func configureView() {
         dayLabel.font = .systemFont(ofSize: 20)
         minTempLabel.font = .systemFont(ofSize: 20)
         maxTempLabel.font = .systemFont(ofSize: 20)
@@ -51,7 +51,7 @@ final class DayWeatherTVCell: BaseTableViewCell {
         
     }
     
-    func configureData(data:WeatherFor5Ddays){
+    func configureData(data:WeatherFor5Ddays) {
         dayLabel.text = data.date
         let url = URL(string: "https://openweathermap.org/img/wn/\(data.icon)@2x.png")
         iconImageView.kf.setImage(with: url)
